@@ -12,9 +12,20 @@ public class MidiManager : MonoBehaviour
 
     private static LinkedList<Note> notes;
 
+    
+    [SerializeField] FretBoard fretBoard;
+
+    //GameObject[,] frets;
+    [SerializeField] int stringCount;
+    [SerializeField] int fretCountPerString;
+
+    [SerializeField] Dictionary<string,GameObject> frets = new Dictionary<string, GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
+        fretBoard = FindObjectOfType<FretBoard>();
+        PopulateFretsArray();
         notes = new LinkedList<Note>();
         startTime = DateTime.Now;
         _inputDevice = InputDevice.GetByName("TriplePlay Connect");
@@ -33,7 +44,22 @@ public class MidiManager : MonoBehaviour
         }
     }
 
-    private static void OnEventReceived(object sender, MidiEventReceivedEventArgs e)
+    private void PopulateFretsArray(){
+        int stringNum = 1;
+        int fretNum = 1;
+        foreach (var fret in fretBoard.GetFrets())
+        {
+            string key = stringNum + "" + fretNum;
+            frets.Add(key, fret);
+            fretNum = (fretNum + 1) % (fretCountPerString + 1);
+            if (fretNum == 0) {
+                stringNum++;
+                fretNum = 1;
+            }
+        }
+    }
+
+    private void OnEventReceived(object sender, MidiEventReceivedEventArgs e)
     {
         var velocity = ((NoteEvent)e.Event).Velocity;
         var midiDevice = (MidiDevice)sender;
@@ -51,11 +77,13 @@ public class MidiManager : MonoBehaviour
             
             note = new Note(midi, noteName, stringNum, fret, velocity, noteStartTime, currentTime);
             notes.AddLast(note);
+            ActivateNote(stringNum, fret);
         }
 
         else if (e.Event.EventType == MidiEventType.NoteOff) {
             note = RemoveNote(midi);
             note.SetEndTime((currentTime - startTime).TotalSeconds);
+            DeactivateNote(note.StringNum, note.Fret);
         }
 
         if (note != null)
@@ -67,7 +95,7 @@ public class MidiManager : MonoBehaviour
         }
     }
 
-    static Note RemoveNote(int midi)
+    private Note RemoveNote(int midi)
     {
         var current = notes.First;
         while (current != null)
@@ -81,5 +109,25 @@ public class MidiManager : MonoBehaviour
             current = next;
         }
         return null;
+    }
+
+    private void ActivateNote(int stringNum, int fretNum)
+    {
+        GameObject fret;
+        string key = stringNum + "" + fretNum;
+        frets.TryGetValue(key, out fret);
+        if (fret != null) {
+            fret.GetComponent<Fret>().Activate();
+        }
+    }
+
+    private void DeactivateNote(int stringNum, int fretNum)
+    {
+        GameObject fret;
+        string key = stringNum + "" + fretNum;
+        frets.TryGetValue(key, out fret);
+        if (fret != null) {
+            fret.GetComponent<Fret>().Deactivate();
+        }
     }
 }
