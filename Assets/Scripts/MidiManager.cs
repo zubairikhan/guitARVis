@@ -3,6 +3,7 @@ using UnityEngine;
 using Melanchall.DryWetMidi.Multimedia;
 using System;
 using Melanchall.DryWetMidi.Core;
+using System.Linq;
 
 public class MidiManager : MonoBehaviour
 {
@@ -18,14 +19,15 @@ public class MidiManager : MonoBehaviour
     //GameObject[,] frets;
     [SerializeField] int stringCount;
     [SerializeField] int fretCountPerString;
+    [SerializeField] string[] allowedNotes;
 
-    [SerializeField] Dictionary<string,GameObject> frets = new Dictionary<string, GameObject>();
+    [SerializeField] Dictionary<string,Fret> frets = new Dictionary<string, Fret>();
 
     // Start is called before the first frame update
     void Start()
     {
         fretBoard = FindObjectOfType<FretBoard>();
-        PopulateFretsArray();
+        PopulateFretsArray(fretBoard);
         notes = new LinkedList<Note>();
         startTime = DateTime.Now;
         _inputDevice = InputDevice.GetByName("TriplePlay Connect");
@@ -44,19 +46,23 @@ public class MidiManager : MonoBehaviour
         }
     }
 
-    private void PopulateFretsArray(){
+    private void PopulateFretsArray(FretBoard fretBoard){
         int stringNum = 1;
-        int fretNum = 1;
+        int fretNum = 0;
         foreach (var fret in fretBoard.GetFrets())
         {
             string key = stringNum + "" + fretNum;
-            frets.Add(key, fret);
+            Debug.Log("Adding key: " + key);
+            frets.Add(key, fret.GetComponent<Fret>());
             fretNum = (fretNum + 1) % (fretCountPerString + 1);
             if (fretNum == 0) {
                 stringNum++;
-                fretNum = 1;
+                fretNum = 0;
             }
         }
+        Fret value;
+        frets.TryGetValue("10", out value);
+        Debug.Log(value.gameObject.name);
     }
 
     private void OnEventReceived(object sender, MidiEventReceivedEventArgs e)
@@ -77,7 +83,14 @@ public class MidiManager : MonoBehaviour
             
             note = new Note(midi, noteName, stringNum, fret, velocity, noteStartTime, currentTime);
             notes.AddLast(note);
-            ActivateNote(stringNum, fret);
+            if (allowedNotes.Contains(noteName))
+            {
+                ActivateNote(stringNum, fret, false);
+            } else
+            {
+                ActivateNote(stringNum, fret, true);
+            }
+            
         }
 
         else if (e.Event.EventType == MidiEventType.NoteOff) {
@@ -111,23 +124,50 @@ public class MidiManager : MonoBehaviour
         return null;
     }
 
-    private void ActivateNote(int stringNum, int fretNum)
+    private void ActivateNote(int stringNum, int fretNum, bool error)
     {
-        GameObject fret;
+        Fret fret;
         string key = stringNum + "" + fretNum;
-        frets.TryGetValue(key, out fret);
-        if (fret != null) {
-            fret.GetComponent<Fret>().Activate();
+        var status = frets.TryGetValue(key, out fret);
+        Debug.Log("Note found: " + status);
+        Debug.Log("Activate key:" + key);
+        //Debug.Log(fret);
+        
+        //Debug.Log("Activating key: " + key);
+        //Debug.Log("Fret activated name: " + fret.gamename);
+        //Fret fretScript = (Fret)fret.gameObject.GetComponent("Fret");
+        //Debug.Log(fretScript.ToString());
+        if (fret != null)
+        {
+            if (!error)
+            {
+                fret.activated = true;
+            }
+            else
+            {
+                fret.error = true;
+            }
         }
+        else
+        {
+            //Debug.Log("Cant get fret script");
+        }
+
+        
     }
 
     private void DeactivateNote(int stringNum, int fretNum)
     {
-        GameObject fret;
+        Fret fret = null;
         string key = stringNum + "" + fretNum;
+        Debug.Log("Deactivate key:" + key);
         frets.TryGetValue(key, out fret);
         if (fret != null) {
-            fret.GetComponent<Fret>().Deactivate();
+            //Debug.Log("Deactivating key: " + fret.gameObject.name);
+            fret.activated = false;
+            fret.error = false;
+        } else {
+            //Debug.Log("Could not find fret");
         }
     }
 }
