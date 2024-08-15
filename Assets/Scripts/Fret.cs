@@ -8,8 +8,9 @@ public class Fret : MonoBehaviour
     [SerializeField] Color activatedColor = Color.white;
     [SerializeField] Color errorColor = Color.red;
     MeshRenderer objRenderer;
-    public bool activated;
+    private bool activated;
     public bool error;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +34,6 @@ public class Fret : MonoBehaviour
         if (activated)
         {
             Activate();
-            //Invoke("Deactivate", 1f);
         }
         else if (error)
         {
@@ -47,14 +47,11 @@ public class Fret : MonoBehaviour
 
     public void Activate()
     {
-        //Debug.Log("Activating inside fret");
         objRenderer.material.color = activatedColor;
     }
 
     public void Deactivate()
     {
-        //Debug.Log("Dectivating inside fret");
-        //Debug.Log("Deativating" + this.gameObject.name);
         objRenderer.material.color = deactivatedColor;
     }
 
@@ -62,6 +59,11 @@ public class Fret : MonoBehaviour
     {
         objRenderer.material.color = errorColor;
     }
+
+    public void SetActivated(bool status) { activated = status; }
+
+    public void SetError(bool status) { error = status; }
+
 
     
 }

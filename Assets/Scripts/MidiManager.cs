@@ -7,16 +7,15 @@ using System.Linq;
 
 public class MidiManager : MonoBehaviour
 {
-    static int velocityThreshold = 80;
-    private static IInputDevice _inputDevice;
-    private static DateTime startTime;
+    [SerializeField] int velocityThreshold = 80;
+    private IInputDevice _inputDevice;
+    private DateTime startTime;
 
-    private static LinkedList<Note> notes;
+    private LinkedList<Note> notes;
 
     
     [SerializeField] FretBoard fretBoard;
 
-    //GameObject[,] frets;
     [SerializeField] int stringCount;
     [SerializeField] int fretCountPerString;
     [SerializeField] string[] allowedNotes;
@@ -51,8 +50,7 @@ public class MidiManager : MonoBehaviour
         int fretNum = 0;
         foreach (var fret in fretBoard.GetFrets())
         {
-            string key = stringNum + "" + fretNum;
-            Debug.Log("Adding key: " + key);
+            string key = GetKey(stringNum, fretNum);
             frets.Add(key, fret.GetComponent<Fret>());
             fretNum = (fretNum + 1) % (fretCountPerString + 1);
             if (fretNum == 0) {
@@ -60,40 +58,38 @@ public class MidiManager : MonoBehaviour
                 fretNum = 0;
             }
         }
-        Fret value;
-        frets.TryGetValue("10", out value);
-        Debug.Log(value.gameObject.name);
     }
 
     private void OnEventReceived(object sender, MidiEventReceivedEventArgs e)
     {
-        var velocity = ((NoteEvent)e.Event).Velocity;
-        var midiDevice = (MidiDevice)sender;
-        var midi = ((NoteEvent)e.Event).NoteNumber;
+        ProcessEvent(sender, e);
+    }
+
+    private void ProcessEvent(object sender, MidiEventReceivedEventArgs e)
+    {
         var currentTime = DateTime.Now;
+        var midiDevice = (MidiDevice)sender;
+
         Note note = null;
 
-        if (e.Event.EventType == MidiEventType.NoteOn && velocity > velocityThreshold) {
-            
-            var channel = ((ChannelEvent)e.Event).Channel;
-            var stringNum = channel + 1;
-            var noteName  = Helper.noteNames[midi % 12];
-            var noteStartTime = (currentTime - startTime).TotalSeconds;
-            var fret = midi - Helper.tuningPitchEStd[channel];
-            
-            note = new Note(midi, noteName, stringNum, fret, velocity, noteStartTime, currentTime);
+        if (IsNotePlayed(e))
+        {
+            note = ComputeNoteProperties(e, currentTime);
             notes.AddLast(note);
-            if (allowedNotes.Contains(noteName))
+
+            if (allowedNotes.Contains(note.NoteName))
             {
-                ActivateNote(stringNum, fret, false);
-            } else
-            {
-                ActivateNote(stringNum, fret, true);
+                ActivateNote(note.StringNum, note.Fret, false);
             }
-            
+            else
+            {
+                ActivateNote(note.StringNum, note.Fret, true);
+            }
         }
 
-        else if (e.Event.EventType == MidiEventType.NoteOff) {
+        else if (IsNoteStopped(e))
+        {
+            var midi = ((NoteEvent)e.Event).NoteNumber;
             note = RemoveNote(midi);
             note.SetEndTime((currentTime - startTime).TotalSeconds);
             DeactivateNote(note.StringNum, note.Fret);
@@ -102,10 +98,33 @@ public class MidiManager : MonoBehaviour
         if (note != null)
         {
             var outputString = $"Event received from '{midiDevice.Name}' at {DateTime.Now}: {e.Event}. " +
-            $"Midi: {note.Midi}. Name: {note.Name}. String: {note.StringNum}. Fret: {note.Fret}. Velocity: {note.Velocity} " +
+            $"Midi: {note.Midi}. Name: {note.NoteName}. String: {note.StringNum}. Fret: {note.Fret}. Velocity: {note.Velocity} " +
             $"StartTime: {note.StartTime}. EndTime: {note.EndTime}. Note Duration: {note.NoteDuration}";
             Debug.Log(outputString);
         }
+    }
+
+    private Note ComputeNoteProperties(MidiEventReceivedEventArgs e, DateTime currentTime)
+    {
+        var midi = ((NoteEvent)e.Event).NoteNumber;
+        var channel = ((ChannelEvent)e.Event).Channel;
+        var stringNum = channel + 1;
+        var noteName = Helper.noteNames[midi % 12];
+        var noteStartTime = (currentTime - startTime).TotalSeconds;
+        var fret = midi - Helper.tuningPitchEStd[channel];
+        var velocity = ((NoteEvent)e.Event).Velocity;
+
+        return new Note(midi, noteName, stringNum, fret, velocity, noteStartTime, currentTime);
+    }
+
+    private bool IsNoteStopped(MidiEventReceivedEventArgs e)
+    {
+        return e.Event.EventType == MidiEventType.NoteOff;
+    }
+
+    private bool IsNotePlayed(MidiEventReceivedEventArgs e)
+    {
+        return e.Event.EventType == MidiEventType.NoteOn && ((NoteEvent)e.Event).Velocity > velocityThreshold;
     }
 
     private Note RemoveNote(int midi)
@@ -127,47 +146,38 @@ public class MidiManager : MonoBehaviour
     private void ActivateNote(int stringNum, int fretNum, bool error)
     {
         Fret fret;
-        string key = stringNum + "" + fretNum;
+        string key = GetKey(stringNum, fretNum);
         var status = frets.TryGetValue(key, out fret);
-        Debug.Log("Note found: " + status);
-        Debug.Log("Activate key:" + key);
-        //Debug.Log(fret);
-        
-        //Debug.Log("Activating key: " + key);
-        //Debug.Log("Fret activated name: " + fret.gamename);
-        //Fret fretScript = (Fret)fret.gameObject.GetComponent("Fret");
-        //Debug.Log(fretScript.ToString());
-        if (fret != null)
+
+        if (fret != null && !error)
         {
-            if (!error)
-            {
-                fret.activated = true;
-            }
-            else
-            {
-                fret.error = true;
-            }
+            fret.SetActivated(true);
+        }
+        else if (fret != null && error)
+        {
+            fret.SetError(true);
         }
         else
         {
-            //Debug.Log("Cant get fret script");
+            Debug.Log("Couldn't find fret to activate");
         }
-
-        
     }
 
     private void DeactivateNote(int stringNum, int fretNum)
     {
         Fret fret = null;
-        string key = stringNum + "" + fretNum;
-        Debug.Log("Deactivate key:" + key);
+        string key = GetKey(stringNum, fretNum);
         frets.TryGetValue(key, out fret);
+        
         if (fret != null) {
-            //Debug.Log("Deactivating key: " + fret.gameObject.name);
-            fret.activated = false;
-            fret.error = false;
+            fret.SetActivated(false);
+            fret.SetError(false);
         } else {
-            //Debug.Log("Could not find fret");
+            Debug.Log("Couldn't find fret to deactivate");
         }
+    }
+
+    private string GetKey(int stringNum, int fretNum) {
+        return stringNum + "" + fretNum;
     }
 }

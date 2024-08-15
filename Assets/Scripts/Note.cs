@@ -3,7 +3,7 @@ using System;
 public class Note
 {
     public int Midi {get; private set;}
-    public string Name{get; private set;}
+    public string NoteName{get; private set;}
     public int StringNum{get; private set;}
     public int Fret{get; private set;}
     public int Velocity{get; private set;}
@@ -18,9 +18,9 @@ public class Note
     
     
 
-    public Note(int midi, string name, int stringNum, int fret, int velocity, double startTime, DateTime startTimeStamp) {
+    public Note(int midi, string noteName, int stringNum, int fret, int velocity, double startTime, DateTime startTimeStamp) {
         this.Midi = midi;
-        this.Name = name;
+        this.NoteName = noteName;
         this.StringNum = stringNum;
         this.Fret = fret;
         this.Velocity = velocity;

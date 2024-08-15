@@ -361,6 +361,10 @@ PrefabInstance:
       value: MidiManager
       objectReference: {fileID: 0}
     - target: {fileID: 8424913022467716697, guid: 194fc7b629ce75143874944475638cb0, type: 3}
+      propertyPath: velocityThreshold
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8424913022467716697, guid: 194fc7b629ce75143874944475638cb0, type: 3}
       propertyPath: allowedNotes.Array.size
       value: 7
       objectReference: {fileID: 0}
