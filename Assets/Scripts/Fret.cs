@@ -8,14 +8,21 @@ public class Fret : MonoBehaviour
     [SerializeField] Color activatedColor = Color.white;
     [SerializeField] Color errorColor = Color.red;
     MeshRenderer objRenderer;
-    private bool activated;
-    public bool error;
+    private bool isActivated;
+    private bool isError;
+    private bool isPlayed;
+
+    private int playedCount;
+    private int maxPlays = 10;
+
+    private ApplicationManager manager;
 
     // Start is called before the first frame update
     void Start()
     {
+        manager = FindObjectOfType<ApplicationManager>();
         objRenderer = this.gameObject.GetComponent<MeshRenderer>();
-        objRenderer.material.color = deactivatedColor;
+        SetColor(deactivatedColor);
     }
 
     // Update is called once per frame
@@ -23,47 +30,84 @@ public class Fret : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-            objRenderer.material.color = activatedColor;
+            SetColor(activatedColor);
         }
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            objRenderer.material.color = deactivatedColor;
+            SetColor(deactivatedColor);
+        }
+        if (manager.GetCurrentPlayMode() == GameMode.Scales)
+        {
+            if (isActivated)
+            {
+                Activate();
+            }
+            else if (isError)
+            {
+                ActivateError();
+            }
+
+            else
+            {
+                Deactivate();
+            }
         }
 
-        if (activated)
+        if (manager.GetCurrentPlayMode() == GameMode.Heatmap)
         {
-            Activate();
+            if (isPlayed)
+            {
+                MarkPlayed();
+                SetIsPlayed(false);
+            }
         }
-        else if (error)
-        {
-            ActivateError();
-        }
-        else
-        {
-            Deactivate();
-        }
+
     }
 
-    public void Activate()
+    private void Activate()
     {
-        objRenderer.material.color = activatedColor;
+        SetColor(activatedColor);
     }
 
-    public void Deactivate()
+    private void Deactivate()
     {
-        objRenderer.material.color = deactivatedColor;
+        SetColor(deactivatedColor);
     }
 
     private void ActivateError()
     {
-        objRenderer.material.color = errorColor;
+        SetColor(errorColor);
     }
 
-    public void SetActivated(bool status) { activated = status; }
+    public void MarkPlayed()
+    {
+        playedCount++;
+        SetColor(GetHeatmapColor(playedCount));
+    }
 
-    public void SetError(bool status) { error = status; }
+    public void ResetFret()
+    {
+        Deactivate();
+        playedCount = 0;
+    }
 
+    public void SetActivated(bool status) { isActivated = status; }
 
-    
+    public void SetError(bool status) { isError = status; }
+
+    public void SetIsPlayed(bool status) { isPlayed = status; }
+
+    private void SetColor(Color color)
+    {
+        objRenderer.material.color = color;
+    }
+
+    private Color GetHeatmapColor(int playedCount)
+    {
+        float normalizedVal = Mathf.Clamp01((float)playedCount / maxPlays);
+
+        return Color.Lerp(Color.black, Color.white, normalizedVal);
+    }
+
 }

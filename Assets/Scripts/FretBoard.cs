@@ -28,7 +28,7 @@ public class FretBoard : MonoBehaviour
     {
         foreach (var fret in frets)
         {
-            fret.GetComponent<Fret>().Deactivate();
+            fret.GetComponent<Fret>().ResetFret();
         }
     }
 }

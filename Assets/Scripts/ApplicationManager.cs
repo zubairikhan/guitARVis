@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ApplicationManager : MonoBehaviour
 {
-    PlayMode currentPlayMode;
+    GameMode currentPlayMode;
     FretBoard fretBoard;
     // Start is called before the first frame update
     void Start()
@@ -25,24 +25,23 @@ public class ApplicationManager : MonoBehaviour
         }
     }
 
-    public PlayMode GetCurrentPlayMode() { return currentPlayMode; }
+    public GameMode GetCurrentPlayMode() { return currentPlayMode; }
 
     public void SetCurrentPlayModeAsScales ()
     {
         fretBoard.ResetFretBoard();
-        currentPlayMode = PlayMode.Scales;
+        currentPlayMode = GameMode.Scales;
     }
 
     public void SetCurrentPlayModeAsHeatmap()
     {
         fretBoard.ResetFretBoard();
-        currentPlayMode = PlayMode.Heatmap;
+        currentPlayMode = GameMode.Heatmap;
     }
+}
 
-
-    public enum PlayMode
-    { 
-        Scales,
-        Heatmap
-    }
+public enum GameMode
+{
+    Scales,
+    Heatmap
 }

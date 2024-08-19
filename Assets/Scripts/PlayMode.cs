@@ -81,6 +81,30 @@ public class PlayMode : MonoBehaviour
         LogNote(e, midiDevice, note);
     }
 
+    public void ProcessEventHeatmap(object sender, MidiEventReceivedEventArgs e)
+    {
+        var currentTime = DateTime.Now;
+        var midiDevice = (MidiDevice)sender;
+        Note note = null;
+
+        if (IsNotePlayed(e))
+        {
+            note = ComputeNoteProperties(e, currentTime);
+            notes.AddLast(note);
+
+            ActivateNoteHeatmap(note.StringNum, note.Fret);
+        }
+
+        else if (IsNoteStopped(e))
+        {
+            var midi = ((NoteEvent)e.Event).NoteNumber;
+            note = RemoveNote(midi);
+            note.SetEndTime((currentTime - startTime).TotalSeconds);
+        }
+
+        LogNote(e, midiDevice, note);
+    }
+
     private bool IsNoteStopped(MidiEventReceivedEventArgs e)
     {
         return e.Event.EventType == MidiEventType.NoteOff;
@@ -145,6 +169,22 @@ public class PlayMode : MonoBehaviour
         else if (fret != null && error)
         {
             fret.SetError(true);
+        }
+        else
+        {
+            Debug.Log("Couldn't find fret to activate");
+        }
+    }
+
+    private void ActivateNoteHeatmap(int stringNum, int fretNum)
+    {
+        Fret fret;
+        string key = GetKey(stringNum, fretNum);
+        var status = frets.TryGetValue(key, out fret);
+
+        if (fret != null)
+        {
+            fret.SetIsPlayed(true);
         }
         else
         {

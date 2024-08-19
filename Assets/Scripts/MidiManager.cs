@@ -8,11 +8,13 @@ using System.Linq;
 public class MidiManager : MonoBehaviour
 {
     [SerializeField] PlayMode playMode;
+    ApplicationManager manager;
     private IInputDevice _inputDevice;
     
     // Start is called before the first frame update
     void Start()
     {
+        manager = FindObjectOfType<ApplicationManager>();
         playMode = FindObjectOfType<PlayMode>();
         _inputDevice = InputDevice.GetByName("TriplePlay Connect");
         _inputDevice.EventReceived += OnEventReceived;
@@ -32,7 +34,15 @@ public class MidiManager : MonoBehaviour
 
     private void OnEventReceived(object sender, MidiEventReceivedEventArgs e)
     {
-        playMode.ProcessEvent(sender, e);
+        if (manager.GetCurrentPlayMode() == GameMode.Scales)
+        {
+            playMode.ProcessEvent(sender, e);
+        }
+        if (manager.GetCurrentPlayMode() == GameMode.Heatmap)
+        {
+            playMode.ProcessEventHeatmap(sender, e);
+        }
+
     }
 
     
