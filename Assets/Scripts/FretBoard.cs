@@ -23,4 +23,12 @@ public class FretBoard : MonoBehaviour
     }
 
     public GameObject[] GetFrets() => frets;
+
+    public void ResetFretBoard() 
+    {
+        foreach (var fret in frets)
+        {
+            fret.GetComponent<Fret>().Deactivate();
+        }
+    }
 }
