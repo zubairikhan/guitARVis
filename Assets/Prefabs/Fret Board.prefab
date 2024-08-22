@@ -184,6 +184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fretCount: 138
   frets: []
+  fretCountPerString: 0
 --- !u!1001 &671079004778654
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ public class FretBoard : MonoBehaviour
 {
     [SerializeField] int fretCount;
     [SerializeField] GameObject[] frets;
-
+    [SerializeField] int fretCountPerString;
     void Awake()
     {
         frets = new GameObject[fretCount];
@@ -23,6 +23,7 @@ public class FretBoard : MonoBehaviour
     }
 
     public GameObject[] GetFrets() => frets;
+    public int GetFretCountPerString() => fretCountPerString;
 
     public void ResetFretBoard() 
     {

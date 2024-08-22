@@ -15,7 +15,7 @@ public class MidiManager : MonoBehaviour
     void Start()
     {
         manager = FindObjectOfType<ApplicationManager>();
-        playMode = FindObjectOfType<PlayMode>();
+        //playMode = FindObjectOfType<PlayMode>();
         _inputDevice = InputDevice.GetByName("TriplePlay Connect");
         _inputDevice.EventReceived += OnEventReceived;
         _inputDevice.StartEventsListening();
@@ -36,11 +36,11 @@ public class MidiManager : MonoBehaviour
     {
         if (manager.GetCurrentPlayMode() == GameMode.Scales)
         {
-            playMode.ProcessEvent(sender, e);
+            playMode.Process(sender, e);
         }
         if (manager.GetCurrentPlayMode() == GameMode.Heatmap)
         {
-            playMode.ProcessEventHeatmap(sender, e);
+            playMode.Process(sender, e);
         }
 
     }

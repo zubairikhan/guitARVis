@@ -5,21 +5,22 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PlayMode : MonoBehaviour
+public class PlayMode : MonoBehaviour, IProcess
 {
     [SerializeField] FretBoard fretBoard;
-    [SerializeField] int stringCount;
-    [SerializeField] int fretCountPerString;
-    [SerializeField] string[] allowedNotes;
+    
+    [SerializeField] protected string[] allowedNotes;
     [SerializeField] int velocityThreshold = 80;
+    [SerializeField] protected bool showErrors;
 
-    private DateTime startTime;
-    private LinkedList<Note> notes;
-    private Dictionary<string, Fret> frets = new Dictionary<string, Fret>();
+    protected DateTime startTime;
+    protected LinkedList<Note> notes;
+    protected Dictionary<string, Fret> frets = new Dictionary<string, Fret>();
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
+        Debug.Log("Parent plymode executred");
         startTime = DateTime.Now;
         notes = new LinkedList<Note>();
         fretBoard = FindObjectOfType<FretBoard>();
@@ -40,7 +41,7 @@ public class PlayMode : MonoBehaviour
         {
             string key = GetKey(stringNum, fretNum);
             frets.Add(key, fret.GetComponent<Fret>());
-            fretNum = (fretNum + 1) % (fretCountPerString + 1);
+            fretNum = (fretNum + 1) % (fretBoard.GetFretCountPerString() + 1);
             if (fretNum == 0)
             {
                 stringNum++;
@@ -49,72 +50,20 @@ public class PlayMode : MonoBehaviour
         }
     }
 
-    public void ProcessEvent(object sender, MidiEventReceivedEventArgs e)
-    {
-        var currentTime = DateTime.Now;
-        var midiDevice = (MidiDevice)sender;
-        Note note = null;
+    
 
-        if (IsNotePlayed(e))
-        {
-            note = ComputeNoteProperties(e, currentTime);
-            notes.AddLast(note);
+    
 
-            if (allowedNotes.Contains(note.NoteName))
-            {
-                ActivateNote(note.StringNum, note.Fret, false);
-            }
-            else
-            {
-                ActivateNote(note.StringNum, note.Fret, true);
-            }
-        }
-
-        else if (IsNoteStopped(e))
-        {
-            var midi = ((NoteEvent)e.Event).NoteNumber;
-            note = RemoveNote(midi);
-            note.SetEndTime((currentTime - startTime).TotalSeconds);
-            DeactivateNote(note.StringNum, note.Fret);
-        }
-
-        LogNote(e, midiDevice, note);
-    }
-
-    public void ProcessEventHeatmap(object sender, MidiEventReceivedEventArgs e)
-    {
-        var currentTime = DateTime.Now;
-        var midiDevice = (MidiDevice)sender;
-        Note note = null;
-
-        if (IsNotePlayed(e))
-        {
-            note = ComputeNoteProperties(e, currentTime);
-            notes.AddLast(note);
-
-            ActivateNoteHeatmap(note.StringNum, note.Fret);
-        }
-
-        else if (IsNoteStopped(e))
-        {
-            var midi = ((NoteEvent)e.Event).NoteNumber;
-            note = RemoveNote(midi);
-            note.SetEndTime((currentTime - startTime).TotalSeconds);
-        }
-
-        LogNote(e, midiDevice, note);
-    }
-
-    private bool IsNoteStopped(MidiEventReceivedEventArgs e)
+    protected bool IsNoteStopped(MidiEventReceivedEventArgs e)
     {
         return e.Event.EventType == MidiEventType.NoteOff;
     }
 
-    private bool IsNotePlayed(MidiEventReceivedEventArgs e)
+    protected bool IsNotePlayed(MidiEventReceivedEventArgs e)
     {
         return e.Event.EventType == MidiEventType.NoteOn && ((NoteEvent)e.Event).Velocity > velocityThreshold;
     }
-    private void LogNote(MidiEventReceivedEventArgs e, MidiDevice midiDevice, Note note)
+    protected void LogNote(MidiEventReceivedEventArgs e, MidiDevice midiDevice, Note note)
     {
         if (note != null)
         {
@@ -125,7 +74,7 @@ public class PlayMode : MonoBehaviour
         }
     }
 
-    private Note ComputeNoteProperties(MidiEventReceivedEventArgs e, DateTime currentTime)
+    protected Note ComputeNoteProperties(MidiEventReceivedEventArgs e, DateTime currentTime)
     {
         var midi = ((NoteEvent)e.Event).NoteNumber;
         var channel = ((ChannelEvent)e.Event).Channel;
@@ -140,7 +89,7 @@ public class PlayMode : MonoBehaviour
 
 
 
-    private Note RemoveNote(int midi)
+    protected Note RemoveNote(int midi)
     {
         var current = notes.First;
         while (current != null)
@@ -156,61 +105,21 @@ public class PlayMode : MonoBehaviour
         return null;
     }
 
-    private void ActivateNote(int stringNum, int fretNum, bool error)
-    {
-        Fret fret;
-        string key = GetKey(stringNum, fretNum);
-        var status = frets.TryGetValue(key, out fret);
+    
 
-        if (fret != null && !error)
-        {
-            fret.SetActivated(true);
-        }
-        else if (fret != null && error)
-        {
-            fret.SetError(true);
-        }
-        else
-        {
-            Debug.Log("Couldn't find fret to activate");
-        }
-    }
+    
 
-    private void ActivateNoteHeatmap(int stringNum, int fretNum)
-    {
-        Fret fret;
-        string key = GetKey(stringNum, fretNum);
-        var status = frets.TryGetValue(key, out fret);
+    
 
-        if (fret != null)
-        {
-            fret.SetIsPlayed(true);
-        }
-        else
-        {
-            Debug.Log("Couldn't find fret to activate");
-        }
-    }
-
-    private void DeactivateNote(int stringNum, int fretNum)
-    {
-        Fret fret = null;
-        string key = GetKey(stringNum, fretNum);
-        frets.TryGetValue(key, out fret);
-
-        if (fret != null)
-        {
-            fret.SetActivated(false);
-            fret.SetError(false);
-        }
-        else
-        {
-            Debug.Log("Couldn't find fret to deactivate");
-        }
-    }
-
-    private string GetKey(int stringNum, int fretNum)
+    protected string GetKey(int stringNum, int fretNum)
     {
         return stringNum + "" + fretNum;
     }
+
+    public virtual void Process(object sender, MidiEventReceivedEventArgs e) { }
+}
+
+interface IProcess
+{
+    void Process(object sender, MidiEventReceivedEventArgs e);
 }

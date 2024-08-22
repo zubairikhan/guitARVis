@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Fret : MonoBehaviour
 {
-    [SerializeField] Color deactivatedColor = Color.black;
-    [SerializeField] Color activatedColor = Color.white;
+    [SerializeField] Color deactivatedColor = Color.white;
+    [SerializeField] Color activatedColor = Color.blue;
     [SerializeField] Color errorColor = Color.red;
     MeshRenderer objRenderer;
     private bool isActivated;
@@ -58,8 +58,9 @@ public class Fret : MonoBehaviour
         {
             if (isPlayed)
             {
-                MarkPlayed();
+                MarkPlayed(isError);
                 SetIsPlayed(false);
+                SetError(false);
             }
         }
 
@@ -80,10 +81,10 @@ public class Fret : MonoBehaviour
         SetColor(errorColor);
     }
 
-    public void MarkPlayed()
+    public void MarkPlayed(bool error)
     {
         playedCount++;
-        SetColor(GetHeatmapColor(playedCount));
+        SetColor(GetHeatmapColor(playedCount, error));
     }
 
     public void ResetFret()
@@ -103,11 +104,13 @@ public class Fret : MonoBehaviour
         objRenderer.material.color = color;
     }
 
-    private Color GetHeatmapColor(int playedCount)
+    private Color GetHeatmapColor(int playedCount, bool error)
     {
         float normalizedVal = Mathf.Clamp01((float)playedCount / maxPlays);
 
-        return Color.Lerp(Color.black, Color.white, normalizedVal);
+        return error ? 
+            Color.Lerp(deactivatedColor, errorColor, normalizedVal) : 
+            Color.Lerp(deactivatedColor, activatedColor, normalizedVal);
     }
 
 }
