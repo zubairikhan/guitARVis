@@ -23,7 +23,6 @@ public class SelectModePanel : MonoBehaviour
 
     public void Enable()
     {
-        Debug.Log("enable panel");
         this.gameObject.SetActive(true);
     }
 
