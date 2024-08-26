@@ -4,7 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/HeatmapModeScene.unity
+    guid: bb000b3b569b2485bbfa5cc47f9e98f7
+  - enabled: 1
+    path: Assets/Scenes/LastNodeModeScene.unity
+    guid: 57c5e9efad812a54d916e828efef999f
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 4e9494961a0a71a42b7a7582f058b50f, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e5328022071bd7a4aa21aadbe2604d32, type: 2}

@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ApplicationManager : MonoBehaviour
 {
@@ -37,6 +36,11 @@ public class ApplicationManager : MonoBehaviour
     {
         fretBoard.ResetFretBoard();
         currentPlayMode = GameMode.Heatmap;
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 }
 
