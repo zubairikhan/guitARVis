@@ -45,6 +45,10 @@ public class MidiManager : MonoBehaviour
 
     }
 
+    public void ReleaseMidiInput()
+    {
+        (_inputDevice as IDisposable)?.Dispose();
+    }
     
 
     

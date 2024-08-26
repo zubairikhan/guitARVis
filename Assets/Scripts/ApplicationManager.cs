@@ -5,9 +5,11 @@ public class ApplicationManager : MonoBehaviour
 {
     GameMode currentPlayMode;
     FretBoard fretBoard;
+    MidiManager midiManager;
     // Start is called before the first frame update
     void Start()
     {
+        midiManager = FindObjectOfType<MidiManager>();
         fretBoard = FindObjectOfType<FretBoard>();
     }
 
@@ -40,6 +42,7 @@ public class ApplicationManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        midiManager.ReleaseMidiInput();
         SceneManager.LoadScene(sceneName);
     }
 }

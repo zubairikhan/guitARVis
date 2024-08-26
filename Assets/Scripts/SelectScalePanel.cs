@@ -9,12 +9,14 @@ public class SelectScalePanel : MonoBehaviour
 {
     [SerializeField] GameObject buttonPrefab;
     [SerializeField] Transform contentParent;
+    private PlayMode playMode;
     private List<string> menuItems;
     // Start is called before the first frame update
     void Start()
     {
         menuItems = Helper.notesInScale.Keys.ToList();
         PopulateMenu();
+        playMode = FindObjectOfType<PlayMode>();
     }
 
     void PopulateMenu()
@@ -32,6 +34,11 @@ public class SelectScalePanel : MonoBehaviour
     void OnMenuItemClick(string itemName)
     {
         Debug.Log("Cliked on : " + itemName);
+
+        if (Helper.notesInScale.TryGetValue(itemName, out var notes))
+        {
+            playMode.SetAllowedNotes(notes);
+        }
     }
 
     public void Enable()

@@ -27,12 +27,6 @@ public class PlayMode : MonoBehaviour, IProcess
         PopulateFretsArray(fretBoard);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void PopulateFretsArray(FretBoard fretBoard)
     {
         int stringNum = 1;
@@ -49,10 +43,6 @@ public class PlayMode : MonoBehaviour, IProcess
             }
         }
     }
-
-    
-
-    
 
     protected bool IsNoteStopped(MidiEventReceivedEventArgs e)
     {
@@ -87,8 +77,6 @@ public class PlayMode : MonoBehaviour, IProcess
         return new Note(midi, noteName, stringNum, fret, velocity, noteStartTime, currentTime);
     }
 
-
-
     protected Note RemoveNote(int midi)
     {
         var current = notes.First;
@@ -105,15 +93,14 @@ public class PlayMode : MonoBehaviour, IProcess
         return null;
     }
 
-    
-
-    
-
-    
-
     protected string GetKey(int stringNum, int fretNum)
     {
         return stringNum + "" + fretNum;
+    }
+
+    public void SetAllowedNotes(string[] allowedNotes)
+    {
+        this.allowedNotes = allowedNotes;
     }
 
     public virtual void Process(object sender, MidiEventReceivedEventArgs e) { }
