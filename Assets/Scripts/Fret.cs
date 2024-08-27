@@ -60,6 +60,8 @@ public class Fret : MonoBehaviour
 
     private void Deactivate()
     {
+        SetActivated(false);
+        SetError(false);
         SetColor(deactivatedColor);
     }
 
