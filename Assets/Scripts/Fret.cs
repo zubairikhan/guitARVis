@@ -10,10 +10,9 @@ public class Fret : MonoBehaviour
     MeshRenderer objRenderer;
     private bool isActivated;
     private bool isError;
-    private bool isPlayed;
 
     private int playedCount;
-    private int maxPlays = 10;
+    [SerializeField] int maxPlays = 10;
 
     private ApplicationManager manager;
 
@@ -28,24 +27,11 @@ public class Fret : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            SetColor(activatedColor);
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SetColor(deactivatedColor);
-        }
-        if (manager.GetCurrentPlayMode() == GameMode.Scales)
+        if (manager.GetCurrentPlayMode() == typeof(LastNotePlayMode))
         {
             if (isActivated)
             {
-                Activate();
-            }
-            else if (isError)
-            {
-                ActivateError();
+                Activate(isError);
             }
 
             else
@@ -54,31 +40,27 @@ public class Fret : MonoBehaviour
             }
         }
 
-        if (manager.GetCurrentPlayMode() == GameMode.Heatmap)
+        if (manager.GetCurrentPlayMode() == typeof(HeatmapPlayMode))
         {
-            if (isPlayed)
+            if (isActivated)
             {
                 MarkPlayed(isError);
-                SetIsPlayed(false);
+                SetActivated(false);
                 SetError(false);
             }
         }
 
     }
 
-    private void Activate()
+    private void Activate(bool error)
     {
-        SetColor(activatedColor);
+        var targetColor = error ? errorColor : activatedColor;
+        SetColor(targetColor);
     }
 
     private void Deactivate()
     {
         SetColor(deactivatedColor);
-    }
-
-    private void ActivateError()
-    {
-        SetColor(errorColor);
     }
 
     public void MarkPlayed(bool error)
@@ -97,8 +79,6 @@ public class Fret : MonoBehaviour
 
     public void SetError(bool status) { isError = status; }
 
-    public void SetIsPlayed(bool status) { isPlayed = status; }
-
     private void SetColor(Color color)
     {
         objRenderer.material.color = color;
@@ -107,10 +87,8 @@ public class Fret : MonoBehaviour
     private Color GetHeatmapColor(int playedCount, bool error)
     {
         float normalizedVal = Mathf.Clamp01((float)playedCount / maxPlays);
+        var targetColor = error ? errorColor : activatedColor;
 
-        return error ? 
-            Color.Lerp(deactivatedColor, errorColor, normalizedVal) : 
-            Color.Lerp(deactivatedColor, activatedColor, normalizedVal);
+        return Color.Lerp(deactivatedColor, targetColor, normalizedVal);
     }
-
 }

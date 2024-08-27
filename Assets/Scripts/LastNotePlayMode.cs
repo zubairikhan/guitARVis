@@ -42,36 +42,13 @@ public class LastNotePlayMode : PlayMode
         LogNote(e, midiDevice, note);
     }
 
-    private void ActivateNote(int stringNum, int fretNum, bool error)
+    
+    private void DeactivateNote(int stringNum, int fretNum)
     {
-        Fret fret;
         string key = GetKey(stringNum, fretNum);
-        var status = frets.TryGetValue(key, out fret);
-
-        if (fret != null && !error)
-        {
-            fret.SetActivated(true);
-        }
-        else if (fret != null && error)
-        {
-            fret.SetError(true);
-        }
-        else
-        {
-            Debug.Log("Couldn't find fret to activate");
-        }
-    }
-
-    protected void DeactivateNote(int stringNum, int fretNum)
-    {
-        Fret fret = null;
-        string key = GetKey(stringNum, fretNum);
-        frets.TryGetValue(key, out fret);
-
-        if (fret != null)
+        if (frets.TryGetValue(key, out var fret))
         {
             fret.SetActivated(false);
-            fret.SetError(false);
         }
         else
         {

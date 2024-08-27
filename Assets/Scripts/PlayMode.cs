@@ -77,6 +77,21 @@ public class PlayMode : MonoBehaviour, IProcess
         return new Note(midi, noteName, stringNum, fret, velocity, noteStartTime, currentTime);
     }
 
+    protected void ActivateNote(int stringNum, int fretNum, bool error)
+    {
+        string key = GetKey(stringNum, fretNum);
+
+        if (frets.TryGetValue(key, out var fret))
+        {
+            fret.SetActivated(true);
+            fret.SetError(error);
+        }
+        else
+        {
+            Debug.Log("Couldn't find fret to activate");
+        }
+    }
+
     protected Note RemoveNote(int midi)
     {
         var current = notes.First;

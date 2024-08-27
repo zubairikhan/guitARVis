@@ -1,54 +1,25 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ApplicationManager : MonoBehaviour
 {
-    GameMode currentPlayMode;
     FretBoard fretBoard;
     MidiManager midiManager;
+    PlayMode playMode;
     // Start is called before the first frame update
     void Start()
     {
         midiManager = FindObjectOfType<MidiManager>();
         fretBoard = FindObjectOfType<FretBoard>();
+        playMode = FindObjectOfType<PlayMode>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        { 
-            SetCurrentPlayModeAsScales();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SetCurrentPlayModeAsHeatmap();
-        }
-    }
-
-    public GameMode GetCurrentPlayMode() { return currentPlayMode; }
-
-    public void SetCurrentPlayModeAsScales ()
-    {
-        fretBoard.ResetFretBoard();
-        currentPlayMode = GameMode.Scales;
-    }
-
-    public void SetCurrentPlayModeAsHeatmap()
-    {
-        fretBoard.ResetFretBoard();
-        currentPlayMode = GameMode.Heatmap;
-    }
+    public Type GetCurrentPlayMode() { return playMode.GetType(); }
 
     public void LoadScene(string sceneName)
     {
         midiManager.ReleaseMidiInput();
         SceneManager.LoadScene(sceneName);
     }
-}
-
-public enum GameMode
-{
-    Scales,
-    Heatmap
 }
