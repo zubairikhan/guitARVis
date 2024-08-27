@@ -33,12 +33,11 @@ public class SelectScalePanel : MonoBehaviour
 
     void OnMenuItemClick(string itemName)
     {
-        Debug.Log("Cliked on : " + itemName);
-
         if (Helper.notesInScale.TryGetValue(itemName, out var notes))
         {
             playMode.SetAllowedNotes(notes);
         }
+        Disable();
     }
 
     public void Enable()
