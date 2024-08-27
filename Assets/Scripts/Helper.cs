@@ -13,6 +13,7 @@ public class Helper
         { "Emajor", new string[]{ "E", "F#/Gb", "G#/Ab", "A", "B", "C#/Db", "D#/Eb"} },
         { "Fmajor", new string[]{ "F", "G", "A", "A#/Bb", "C", "D", "E"} },
         { "Gmajor", new string[]{ "G", "A", "B", "C", "D", "E", "F#/Gb"} },
+        { "Aminor Pentatonic", new string[]{ "A", "B", "C", "D", "E", "F", "G"} },
     };
 }
 
