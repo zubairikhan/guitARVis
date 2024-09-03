@@ -3,10 +3,10 @@ using System.Collections.Generic;
 public class Helper
 {
     public static int[] tuningPitchEStd = {64, 59, 55, 50, 45, 40};
-
     public static string[] noteNames = {"C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"};
+    public static string[] openStringNoteNames = {"E", "B", "G", "D", "A", "E"};
 
-    public static Dictionary<string, string[]> notesInScale = new Dictionary<string, string[]>
+    public static Dictionary<string, string[]> scales = new Dictionary<string, string[]>
     {
         { "Amajor", new string[]{ "A", "B", "C#", "D", "E", "F#", "G#"} },
         { "Bmajor", new string[]{ "B", "C#/Db", "D#/Eb", "E", "F#/Gb", "G#/Ab", "A#/Bb"} },

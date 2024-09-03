@@ -733,6 +733,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1617653800}
+    - target: {fileID: 4438216007211700048, guid: c0573e73449f142e794516ef4c6ba522, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -746,6 +750,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 551380288323973566, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: G#/Ab
+      objectReference: {fileID: 0}
+    - target: {fileID: 809197896566781336, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: C
+      objectReference: {fileID: 0}
+    - target: {fileID: 1161858436967738451, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: G#/Ab
+      objectReference: {fileID: 0}
+    - target: {fileID: 1163284333864827466, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: G
+      objectReference: {fileID: 0}
+    - target: {fileID: 1416990414896394370, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: F
+      objectReference: {fileID: 0}
     - target: {fileID: 1844926870279790876, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.397
@@ -785,6 +809,82 @@ PrefabInstance:
     - target: {fileID: 1844926870279790876, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1898335624107856113, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: B
+      objectReference: {fileID: 0}
+    - target: {fileID: 1915863408881077223, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: B
+      objectReference: {fileID: 0}
+    - target: {fileID: 2015767022825813563, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: A#/Bb
+      objectReference: {fileID: 0}
+    - target: {fileID: 2340112186755432355, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: D
+      objectReference: {fileID: 0}
+    - target: {fileID: 3360826947293224881, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: E
+      objectReference: {fileID: 0}
+    - target: {fileID: 3388930766329302973, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: G
+      objectReference: {fileID: 0}
+    - target: {fileID: 3491044072542099852, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: F#/Gb
+      objectReference: {fileID: 0}
+    - target: {fileID: 3533170763981039360, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: A
+      objectReference: {fileID: 0}
+    - target: {fileID: 4786886509433427971, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: C#/Db
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880605233686687716, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: F#/Gb
+      objectReference: {fileID: 0}
+    - target: {fileID: 5296112961618054349, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: C
+      objectReference: {fileID: 0}
+    - target: {fileID: 5579337618948803201, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: B
+      objectReference: {fileID: 0}
+    - target: {fileID: 5906204186720465106, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: F
+      objectReference: {fileID: 0}
+    - target: {fileID: 6179649341014980776, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: C#/Db
+      objectReference: {fileID: 0}
+    - target: {fileID: 6190679680807300770, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: D
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709484155398958938, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: A
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860146419798307852, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: E
+      objectReference: {fileID: 0}
+    - target: {fileID: 6924159560909750453, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: D#/Eb
+      objectReference: {fileID: 0}
+    - target: {fileID: 7239655846161462886, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
+      propertyPath: note
+      value: A#/Bb
       objectReference: {fileID: 0}
     - target: {fileID: 8387328891272385819, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
       propertyPath: m_Name

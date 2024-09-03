@@ -9,10 +9,10 @@ public class PlayMode : MonoBehaviour, IProcess
 {
     [SerializeField] FretBoard fretBoard;
     
-    [SerializeField] protected string[] allowedNotes;
+    [SerializeField] public string[] AllowedNotes { get; private set;}
     [SerializeField] int velocityThreshold = 80;
     [SerializeField] protected bool showErrors;
-
+    [SerializeField] string selectedScale = "Aminor Pentatonic";
     protected DateTime startTime;
     protected LinkedList<Note> notes;
     protected Dictionary<string, Fret> frets = new Dictionary<string, Fret>();
@@ -20,11 +20,11 @@ public class PlayMode : MonoBehaviour, IProcess
     // Start is called before the first frame update
     protected void Start()
     {
-        Debug.Log("Parent plymode executred");
         startTime = DateTime.Now;
         notes = new LinkedList<Note>();
         fretBoard = FindObjectOfType<FretBoard>();
         PopulateFretsArray(fretBoard);
+        SetScale(selectedScale);
     }
 
     private void PopulateFretsArray(FretBoard fretBoard)
@@ -41,6 +41,29 @@ public class PlayMode : MonoBehaviour, IProcess
                 stringNum++;
                 fretNum = 0;
             }
+        }
+    }
+
+    public void ActivateScaleOnFretBoard(string[] allowedNotes)
+    {
+        foreach (var fret in fretBoard.GetFrets())
+        {
+            Fret fretScript = fret.GetComponent<Fret>();
+            if (allowedNotes.Contains(fretScript.Note))
+            {
+                fretScript.SwitchOnScale();
+            }
+        }
+    }
+
+    public void SetScale(string itemName)
+    {
+        if (Helper.scales.TryGetValue(itemName, out var notes))
+        {
+            SetAllowedNotes(notes);
+            ResetFretBoard();
+            ActivateScaleOnFretBoard(notes);
+            selectedScale = itemName;
         }
     }
 
@@ -113,9 +136,14 @@ public class PlayMode : MonoBehaviour, IProcess
         return stringNum + "" + fretNum;
     }
 
-    public void SetAllowedNotes(string[] allowedNotes)
+    private void SetAllowedNotes(string[] allowedNotes)
     {
-        this.allowedNotes = allowedNotes;
+        this.AllowedNotes = allowedNotes;
+    }
+
+    public void ResetFretBoard()
+    {
+        fretBoard.ResetFretBoard();
     }
 
     public virtual void Process(object sender, MidiEventReceivedEventArgs e) { }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Fret : MonoBehaviour
@@ -7,18 +8,35 @@ public class Fret : MonoBehaviour
     [SerializeField] Color deactivatedColor = Color.white;
     [SerializeField] Color activatedColor = Color.blue;
     [SerializeField] Color errorColor = Color.red;
+    [SerializeField] Color scaleColor = Color.green;
     MeshRenderer objRenderer;
     private bool isActivated;
     private bool isError;
+
+    PlayMode playMode;
+    private bool IsInScale => playMode.AllowedNotes.Contains(Note);
 
     private int playedCount;
     [SerializeField] int maxPlays = 10;
 
     private ApplicationManager manager;
 
+    [SerializeField] private string note;
+    public string Note
+    {
+        get { return note; }
+        set { note = value; }
+    }
+
+    private void Awake()
+    {
+        playMode = FindObjectOfType<PlayMode>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        
         manager = FindObjectOfType<ApplicationManager>();
         objRenderer = this.gameObject.GetComponent<MeshRenderer>();
         SetColor(deactivatedColor);
@@ -60,15 +78,23 @@ public class Fret : MonoBehaviour
 
     private void Deactivate()
     {
+        var targetColor = IsInScale ? scaleColor : deactivatedColor;
         SetActivated(false);
         SetError(false);
-        SetColor(deactivatedColor);
+        SetColor(targetColor);
     }
 
     public void MarkPlayed(bool error)
     {
         playedCount++;
         SetColor(GetHeatmapColor(playedCount, error));
+    }
+
+    public void SwitchOnScale()
+    {
+        //SetInScale(true);
+        Debug.Log("switching on: " + this.gameObject.name);
+        SetColor(scaleColor);
     }
 
     public void ResetFret()
@@ -80,6 +106,8 @@ public class Fret : MonoBehaviour
     public void SetActivated(bool status) { isActivated = status; }
 
     public void SetError(bool status) { isError = status; }
+
+    //public void SetInScale(bool status) { isInScale = status; }
 
     private void SetColor(Color color)
     {

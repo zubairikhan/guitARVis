@@ -14,7 +14,7 @@ public class SelectScalePanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        menuItems = Helper.notesInScale.Keys.ToList();
+        menuItems = Helper.scales.Keys.ToList();
         PopulateMenu();
         playMode = FindObjectOfType<PlayMode>();
     }
@@ -33,10 +33,7 @@ public class SelectScalePanel : MonoBehaviour
 
     void OnMenuItemClick(string itemName)
     {
-        if (Helper.notesInScale.TryGetValue(itemName, out var notes))
-        {
-            playMode.SetAllowedNotes(notes);
-        }
+        playMode.SetScale(itemName);
         Disable();
     }
 
