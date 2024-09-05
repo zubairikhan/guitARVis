@@ -10,6 +10,12 @@ public class FretBoard : MonoBehaviour
     [SerializeField] int fretCountPerString;
     void Awake()
     {
+        
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         frets = new GameObject[fretCount];
         for (int i = 0; i < gameObject.transform.childCount; i++)
         {
@@ -17,12 +23,6 @@ public class FretBoard : MonoBehaviour
         }
 
         SetNotesOnFrets();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     public GameObject[] GetFrets() => frets;

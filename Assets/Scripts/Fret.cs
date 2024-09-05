@@ -30,13 +30,13 @@ public class Fret : MonoBehaviour
 
     private void Awake()
     {
-        playMode = FindObjectOfType<PlayMode>();
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        playMode = FindObjectOfType<PlayMode>();
         manager = FindObjectOfType<ApplicationManager>();
         objRenderer = this.gameObject.GetComponent<MeshRenderer>();
         SetColor(deactivatedColor);
