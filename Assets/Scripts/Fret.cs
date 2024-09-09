@@ -43,7 +43,7 @@ public class Fret : MonoBehaviour
         manager = FindObjectOfType<ApplicationManager>();
         objRenderer = this.gameObject.GetComponent<MeshRenderer>();
         SetColor(deactivatedColor);
-        noteNameTextBox.text = Note;
+        SetNoteName();
     }
 
     // Update is called once per frame
@@ -72,6 +72,14 @@ public class Fret : MonoBehaviour
             }
         }
 
+    }
+
+    private void SetNoteName()
+    {
+        if (Helper.noteNamesToDisplay.Contains(Note))
+        {
+            noteNameTextBox.text = Note;
+        }
     }
 
     private void Activate(bool error)
