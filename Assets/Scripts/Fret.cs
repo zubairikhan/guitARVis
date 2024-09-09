@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Fret : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class Fret : MonoBehaviour
     [SerializeField] Color activatedColor = Color.blue;
     [SerializeField] Color errorColor = Color.red;
     [SerializeField] Color scaleColor = Color.green;
+    [SerializeField] TMP_Text noteNameTextBox;
     MeshRenderer objRenderer;
     private bool isActivated;
     private bool isError;
@@ -40,6 +43,7 @@ public class Fret : MonoBehaviour
         manager = FindObjectOfType<ApplicationManager>();
         objRenderer = this.gameObject.GetComponent<MeshRenderer>();
         SetColor(deactivatedColor);
+        noteNameTextBox.text = Note;
     }
 
     // Update is called once per frame
