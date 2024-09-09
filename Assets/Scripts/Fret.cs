@@ -125,4 +125,9 @@ public class Fret : MonoBehaviour
 
         return Color.Lerp(deactivatedColor, targetColor, normalizedVal);
     }
+
+    public void ToggleNoteNameOnFret(bool status)
+    {
+        noteNameTextBox.gameObject.SetActive(status);
+    }
 }

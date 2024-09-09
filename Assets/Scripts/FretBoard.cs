@@ -37,6 +37,14 @@ public class FretBoard : MonoBehaviour
         }
     }
 
+    public void ToggleNoteNameOnFrets(bool status)
+    {
+        foreach (var fret in frets)
+        {
+            fret.GetComponent<Fret>().ToggleNoteNameOnFret(status);
+        }
+    }
+
     public void SetNotesOnFrets() 
     {
         int stringNum = 0;
