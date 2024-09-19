@@ -23,7 +23,7 @@ public class PlayMode : MonoBehaviour, IProcess
         notes = new LinkedList<Note>();
         fretBoard = FindObjectOfType<FretBoard>();
         PopulateFretsArray(fretBoard);
-        SetScale(selectedScale);
+        ChangeNotesToPractice(selectedScale);
     }
 
     private void PopulateFretsArray(FretBoard fretBoard)
@@ -55,9 +55,9 @@ public class PlayMode : MonoBehaviour, IProcess
         }
     }
 
-    public void SetScale(string itemName)
+    public void ChangeNotesToPractice(string itemName)
     {
-        if (Helper.scales.TryGetValue(itemName, out var notes))
+        if (Helper.allowedNotes.TryGetValue(itemName, out var notes))
         {
             SetAllowedNotes(notes);
             ResetFretBoard();

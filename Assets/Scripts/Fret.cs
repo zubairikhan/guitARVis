@@ -76,7 +76,7 @@ public class Fret : MonoBehaviour
 
     private void SetNoteName()
     {
-        if (Helper.noteNamesToDisplay.Contains(Note))
+        if (Helper.naturalNotes.Contains(Note))
         {
             noteNameTextBox.text = Note;
         }

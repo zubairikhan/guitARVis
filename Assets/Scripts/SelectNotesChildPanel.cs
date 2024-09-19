@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectScalePanel : MonoBehaviour
+public class SelectNotesChildPanel : MonoBehaviour
 {
     [SerializeField] GameObject buttonPrefab;
     [SerializeField] Transform contentParent;
@@ -14,9 +14,20 @@ public class SelectScalePanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        menuItems = Helper.scales.Keys.ToList();
-        PopulateMenu();
+        //PopulateMenu();
         playMode = FindObjectOfType<PlayMode>();
+    }
+
+    public void SetMenuItems(List<string> items)
+    {
+        menuItems = items;
+        BuildMenu();
+    }
+
+    void BuildMenu() 
+    {
+        ClearMenu();
+        PopulateMenu();
     }
 
     void PopulateMenu()
@@ -31,9 +42,25 @@ public class SelectScalePanel : MonoBehaviour
         }
     }
 
+    void ClearMenu()
+    {
+        GameObject[] allChildren = new GameObject[contentParent.childCount];
+        int i = 0;
+        foreach (Transform child in contentParent)
+        {
+            allChildren[i] = child.gameObject;
+            i += 1;
+        }
+        
+        foreach (GameObject child in allChildren)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
     void OnMenuItemClick(string itemName)
     {
-        playMode.SetScale(itemName);
+        playMode.ChangeNotesToPractice(itemName);
         Disable();
     }
 
