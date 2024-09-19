@@ -22,7 +22,7 @@ public class Fret : MonoBehaviour
     private int playedCount;
     [SerializeField] int maxPlays = 10;
 
-    private ApplicationManager manager;
+    private ApplicationManager applicationManager;
 
     [SerializeField] private string note;
     public string Note
@@ -40,7 +40,7 @@ public class Fret : MonoBehaviour
     void Start()
     {
         playMode = FindObjectOfType<PlayMode>();
-        manager = FindObjectOfType<ApplicationManager>();
+        applicationManager = FindObjectOfType<ApplicationManager>();
         objRenderer = this.gameObject.GetComponent<MeshRenderer>();
         SetColor(deactivatedColor);
         SetNoteName();
@@ -49,7 +49,7 @@ public class Fret : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (manager.GetCurrentPlayMode() == typeof(LastNotePlayMode))
+        if (applicationManager.GetCurrentPlayMode() == typeof(LastNotePlayMode))
         {
             if (isActivated)
             {
@@ -62,7 +62,7 @@ public class Fret : MonoBehaviour
             }
         }
 
-        if (manager.GetCurrentPlayMode() == typeof(HeatmapPlayMode))
+        if (applicationManager.GetCurrentPlayMode() == typeof(HeatmapPlayMode))
         {
             if (isActivated)
             {
@@ -90,7 +90,7 @@ public class Fret : MonoBehaviour
 
     private void Deactivate()
     {
-        var targetColor = IsInScale ? scaleColor : deactivatedColor;
+        var targetColor = applicationManager.IsHintsEnabled() && IsInScale ? scaleColor : deactivatedColor;
         SetActivated(false);
         SetError(false);
         SetColor(targetColor);
@@ -107,6 +107,14 @@ public class Fret : MonoBehaviour
         //SetInScale(true);
         Debug.Log("switching on: " + this.gameObject.name);
         SetColor(scaleColor);
+    }
+
+    public void ToggleNote(bool status)
+    {
+        if (playedCount != 0 ) { return; }
+
+        var targetColor = status && IsInScale ? scaleColor : deactivatedColor;
+        SetColor(targetColor);
     }
 
     public void ResetFret()

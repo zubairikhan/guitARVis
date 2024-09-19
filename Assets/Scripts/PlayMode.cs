@@ -8,7 +8,6 @@ using UnityEngine;
 public class PlayMode : MonoBehaviour, IProcess
 {
     [SerializeField] FretBoard fretBoard;
-    
     [SerializeField] public string[] AllowedNotes { get; private set;}
     [SerializeField] int velocityThreshold = 80;
     [SerializeField] protected bool showErrors;

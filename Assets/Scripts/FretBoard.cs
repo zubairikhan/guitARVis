@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class FretBoard : MonoBehaviour
@@ -42,6 +44,16 @@ public class FretBoard : MonoBehaviour
         foreach (var fret in frets)
         {
             fret.GetComponent<Fret>().ToggleNoteNameOnFret(status);
+        }
+    }
+
+    public void ToggleHintsForAllowedNotes(bool status)
+    {
+        foreach (var fret in frets)
+        {
+            Fret fretScript = fret.GetComponent<Fret>();
+            fretScript.ToggleNoteNameOnFret(status);
+            fretScript.ToggleNote(status);
         }
     }
 

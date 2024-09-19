@@ -8,6 +8,7 @@ public class ApplicationManager : MonoBehaviour
     FretBoard fretBoard;
     MidiManager midiManager;
     PlayMode playMode;
+    bool hintsEnabled = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,4 +29,8 @@ public class ApplicationManager : MonoBehaviour
     {
         midiManager.ReleaseMidiInput();
     }
+
+    public bool IsHintsEnabled() { return hintsEnabled; }
+
+    public void SetHintsEnabled(bool status) { hintsEnabled = status; }
 }
