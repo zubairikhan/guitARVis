@@ -1,4 +1,5 @@
 using Melanchall.DryWetMidi.Core;
+using Melanchall.DryWetMidi.Interaction;
 using Melanchall.DryWetMidi.Multimedia;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using UnityEngine;
 public class PlayMode : MonoBehaviour, IProcess
 {
     [SerializeField] FretBoard fretBoard;
+    StatisticsPanel statisticsPanel;
     [SerializeField] public string[] AllowedNotes { get; private set;}
     [SerializeField] int velocityThreshold = 80;
     [SerializeField] protected bool showErrors;
@@ -15,6 +17,8 @@ public class PlayMode : MonoBehaviour, IProcess
     protected DateTime startTime;
     protected LinkedList<Note> notes;
     protected Dictionary<string, Fret> frets = new Dictionary<string, Fret>();
+    int countCorrectNotes = 0;
+    int countIncorrectNotes = 0;
 
     // Start is called before the first frame update
     protected void Start()
@@ -22,6 +26,7 @@ public class PlayMode : MonoBehaviour, IProcess
         startTime = DateTime.Now;
         notes = new LinkedList<Note>();
         fretBoard = FindObjectOfType<FretBoard>();
+        statisticsPanel = FindObjectOfType<StatisticsPanel>();
         PopulateFretsArray(fretBoard);
         ChangeNotesToPractice(selectedScale);
     }
@@ -61,6 +66,7 @@ public class PlayMode : MonoBehaviour, IProcess
         {
             SetAllowedNotes(notes);
             ResetFretBoard();
+            ResetStatistics();
             ActivateScaleOnFretBoard(notes);
             selectedScale = itemName;
         }
@@ -143,6 +149,37 @@ public class PlayMode : MonoBehaviour, IProcess
     public void ResetFretBoard()
     {
         fretBoard.ResetFretBoard();
+    }
+
+    protected bool IsCorrectNotePlayed(string noteName)
+    {
+        bool isCorrectNotePlayed = AllowedNotes.Contains(noteName);
+        UpdateStatistics(isCorrectNotePlayed);
+
+        return isCorrectNotePlayed;
+    }
+
+    private void UpdateStatistics(bool isCorrectNotePlayed)
+    {
+        if (isCorrectNotePlayed)
+        {
+            countCorrectNotes++;
+        }
+        else
+        {
+            countIncorrectNotes++;
+        }
+    }
+
+    public void ResetStatistics()
+    {
+        countCorrectNotes = 0;
+        countIncorrectNotes = 0;
+    }
+
+    public (float, float) GetStatistics()
+    {
+        return (countCorrectNotes, countIncorrectNotes);
     }
 
     public virtual void Process(object sender, MidiEventReceivedEventArgs e) { }

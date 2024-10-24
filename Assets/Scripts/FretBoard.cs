@@ -10,11 +10,7 @@ public class FretBoard : MonoBehaviour
     [SerializeField] int fretCount;
     [SerializeField] GameObject[] frets;
     [SerializeField] int fretCountPerString;
-    void Awake()
-    {
-        
-    }
-
+     
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +29,7 @@ public class FretBoard : MonoBehaviour
 
     public void ResetFretBoard() 
     {
+
         foreach (var fret in frets)
         {
             fret.GetComponent<Fret>().ResetFret();

@@ -17,7 +17,7 @@ public class HeatmapPlayMode : PlayMode
             note = ComputeNoteProperties(e, currentTime);
             notes.AddLast(note);
 
-            if (AllowedNotes.Contains(note.NoteName))
+            if (IsCorrectNotePlayed(note.NoteName))
             {
                 ActivateNote(note.StringNum, note.Fret, false);
             }
