@@ -11,7 +11,7 @@ public class FretBoard : MonoBehaviour
     [SerializeField] int fretCount;
     [SerializeField] GameObject[] frets;
     [SerializeField] int fretCountPerString;
-    [SerializeField] float startingFretDist = 0.04f;
+    [SerializeField] float startingFretDist = 0.035604f;
     [SerializeField] Transform[] startingFretPos;
     [SerializeField] Transform[] endingFretPos;
     Vector3[] stringDirections;
@@ -32,7 +32,7 @@ public class FretBoard : MonoBehaviour
         Vector3 target = Vector3.zero;
         Vector3 prevFretPos = Vector3.zero;
 
-        for (int i = 0; i < gameObject.transform.childCount - 1; i++)
+        for (int i = 0; i < fretCount; i++)
         {
             var gameObject = this.gameObject.transform.GetChild(i).gameObject;
 
@@ -45,28 +45,19 @@ public class FretBoard : MonoBehaviour
             }
             else
             {
-                //if (fretDistChangesHashSet.Contains(j))
-                //{
-                //    fretDist -= 0.002f;
-                //}
-                fretDist -= 0.001f;
                 Vector3 move = fretDist * stringDirections[currStringIdx];
+                fretDist *= 0.9437f;
                 target = prevFretPos + move;
             }
 
-            //Vector3 scale = gameObject.transform.localScale;
-            //scale.x *= 0.98f;
-            //gameObject.transform.localScale = scale;
             gameObject.transform.position = target;
-            
             prevFretPos = target;
 
-
-            //var xpos = prevFretPos + fretDist;
-            //gameObject.transform.Translate(xpos, 0, 0);
-            //prevFretPos = xpos;
-
-
+            Vector3 scale = gameObject.transform.localScale;
+            scale.x = (float)(scale.x * Math.Pow(0.965, j));
+            gameObject.transform.localScale = scale;
+            
+            
             frets[i] = gameObject;
         }
 
