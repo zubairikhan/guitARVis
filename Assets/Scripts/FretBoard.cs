@@ -17,16 +17,23 @@ public class FretBoard : MonoBehaviour
     Vector3[] stringDirections;
     
     [SerializeField] static int[] fretDistChanges = { 2, 4, 8, 12, 16, 20 };
+    
     HashSet<int> fretDistChangesHashSet = new HashSet<int>(fretDistChanges);
      
     // Start is called before the first frame update
     void Start()
     {
-        
+        SetupFretPositionsV2();
+
+        SetNotesOnFrets();
+    }
+
+    private void SetupFretPositionsV1()
+    {
         stringDirections = ComputeStringDirections(startingFretPos, endingFretPos);
 
         frets = new GameObject[fretCount];
-        
+
         int currStringIdx = -1;
         float fretDist = 0;
         Vector3 target = Vector3.zero;
@@ -56,12 +63,43 @@ public class FretBoard : MonoBehaviour
             Vector3 scale = gameObject.transform.localScale;
             scale.x = (float)(scale.x * Math.Pow(0.965, j));
             gameObject.transform.localScale = scale;
-            
-            
+
+
             frets[i] = gameObject;
         }
+    }
 
-        SetNotesOnFrets();
+    private void SetupFretPositionsV2()
+    {
+        stringDirections = ComputeStringDirections(startingFretPos, endingFretPos);
+
+        frets = new GameObject[fretCount];
+
+        int currStringIdx = -1;
+        double scalingFact = 0;
+
+        for (int i = 0; i < fretCount; i++)
+        {
+            var gameObject = this.gameObject.transform.GetChild(i).gameObject;
+
+            int j = i % (fretCountPerString + 1);
+            if (j == 0)
+            {
+                currStringIdx++;
+            }
+            scalingFact = Helper.fretDistsFromNut[j] / stringDirections[currStringIdx].x;
+            Vector3 move = (float)scalingFact * stringDirections[currStringIdx];
+            gameObject.transform.position += move;
+            
+            //prevFretPos = target;
+
+            Vector3 scale = gameObject.transform.localScale;
+            scale.x = (float)(scale.x * Math.Pow(0.965, j));
+            gameObject.transform.localScale = scale;
+
+
+            frets[i] = gameObject;
+        }
     }
 
     private Vector3[] ComputeStringDirections(Transform[] startingFretPos, Transform[] endingFretPos)
@@ -72,6 +110,16 @@ public class FretBoard : MonoBehaviour
             directions[i] = (endingFretPos[i].position - startingFretPos[i].position).normalized;
         }
         return directions;
+    }
+
+    private double[] ComputeStringAngles(Transform[] startingFretPos, Transform[] endingFretPos)
+    {
+        double[] angles = new double[6];
+        for (int i = 0; i < startingFretPos.Length; i++)
+        {
+            angles[i] = Math.Atan(endingFretPos[i].position.y - startingFretPos[i].position.x / Helper.fretDistsFromNut[^1]);
+        }
+        return angles;
     }
 
     public GameObject[] GetFrets() => frets;

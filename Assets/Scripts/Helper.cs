@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Helper
 {
@@ -33,6 +34,32 @@ public class Helper
         { "E", new string[]{ "E" }},
         { "F", new string[]{ "F" }},
         { "G", new string[]{ "G" }}
+    };
+
+    public static double[] fretDistsFromNut =
+    {
+        0,
+        0.036316,
+        0.070596,
+        0.102954,
+        0.133498,
+        0.162329,
+        0.189543,
+        0.215232,
+        0.23948,
+        0.262369,
+        0.283974,
+        0.304368,
+        0.323619,
+        0.34179,
+        0.358942,
+        0.375133,
+        0.390415,
+        0.404841,
+        0.418458,
+        0.431312,
+        0.443444,
+        0.454897 
     };
 }
 
