@@ -23,7 +23,13 @@ public class FretBoard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetupFretPositionsV2();
+        frets = new GameObject[fretCount];
+        
+        //SetupFretPositionsV2();
+        for (int i = 0; i < fretCount; i++)
+        {
+            frets[i] = this.gameObject.transform.GetChild(i).gameObject;
+        }
 
         SetNotesOnFrets();
     }
@@ -32,7 +38,7 @@ public class FretBoard : MonoBehaviour
     {
         stringDirections = ComputeStringDirections(startingFretPos, endingFretPos);
 
-        frets = new GameObject[fretCount];
+        
 
         int currStringIdx = -1;
         float fretDist = 0;
@@ -41,8 +47,8 @@ public class FretBoard : MonoBehaviour
 
         for (int i = 0; i < fretCount; i++)
         {
-            var gameObject = this.gameObject.transform.GetChild(i).gameObject;
-
+            
+            var fretGameObject = frets[i].gameObject;
             int j = i % (fretCountPerString + 1);
             if (j == 0)
             {
@@ -57,19 +63,19 @@ public class FretBoard : MonoBehaviour
                 target = prevFretPos + move;
             }
 
-            gameObject.transform.position = target;
+            fretGameObject.transform.position = target;
             prevFretPos = target;
 
-            Vector3 scale = gameObject.transform.localScale;
+            Vector3 scale = fretGameObject.transform.localScale;
             scale.x = (float)(scale.x * Math.Pow(0.965, j));
-            gameObject.transform.localScale = scale;
+            fretGameObject.transform.localScale = scale;
 
 
-            frets[i] = gameObject;
+            
         }
     }
 
-    private void SetupFretPositionsV2()
+    public void SetupFretPositionsV2()
     {
         stringDirections = ComputeStringDirections(startingFretPos, endingFretPos);
 
@@ -87,8 +93,10 @@ public class FretBoard : MonoBehaviour
             {
                 currStringIdx++;
             }
-            scalingFact = Helper.fretDistsFromNut[j] / stringDirections[currStringIdx].x;
-            Vector3 move = (float)scalingFact * stringDirections[currStringIdx];
+            //scalingFact = Helper.fretDistsFromNut[j] / stringDirections[currStringIdx].x;
+            //Vector3 move = (float)scalingFact * stringDirections[currStringIdx];
+
+            Vector3 move = (float)Helper.fretDistsFromNut[j] * stringDirections[currStringIdx];
             gameObject.transform.position += move;
             
             //prevFretPos = target;
