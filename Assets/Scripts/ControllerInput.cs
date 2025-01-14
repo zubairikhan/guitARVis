@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
@@ -8,10 +9,11 @@ public class ControllerInput : MonoBehaviour
     [SerializeField] GameObject testPoint;
     [SerializeField] Vector3 tipOffset = new Vector3(0, 0, 0.1f);
     [SerializeField] Transform controller;
+    [SerializeField] Transform leftControllerAnchor;
     [SerializeField] float gizmosSize = 0.005f;
 
     [SerializeField] GameObject boardPlane;
-    [SerializeField] float zStretch = 0.0554f;
+    [SerializeField] float xStretch = 0.0554f;
     [SerializeField] float yStretch = 0.005f;
     private Vector3 startPoint;
     private Vector3 endPoint;
@@ -58,13 +60,13 @@ public class ControllerInput : MonoBehaviour
     {
         Vector3 midpoint = (startPoint + endPoint) / 2;
         float distance = Vector3.Distance(startPoint, endPoint);
-        Vector3 scale = new Vector3(distance, yStretch, zStretch);
+        Vector3 scale = new Vector3(xStretch, yStretch, distance);
 
         Quaternion rotation1 = Quaternion.LookRotation(endPoint - startPoint);
         
         //Quaternion rot2 = Quaternion.Euler(90f, 0 , 0);
 
-        GameObject plane = Instantiate(boardPlane, midpoint, rotation1);
+        GameObject plane = Instantiate(boardPlane, midpoint, rotation1, leftControllerAnchor);
         plane.transform.localScale = scale;
         
         Debug.Log("PLane instantiated");
