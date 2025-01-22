@@ -13,6 +13,7 @@ public class ControllerInput : MonoBehaviour
     [SerializeField] float gizmosSize = 0.005f;
 
     [SerializeField] GameObject boardPlane;
+    private List<GameObject> boards = new List<GameObject>();
     [SerializeField] float xStretch = 0.0554f;
     [SerializeField] float yStretch = 0.005f;
     private Vector3 startPoint;
@@ -68,7 +69,7 @@ public class ControllerInput : MonoBehaviour
 
         GameObject plane = Instantiate(boardPlane, midpoint, rotation1, leftControllerAnchor);
         plane.transform.localScale = scale;
-        
+        boards.Add(plane);
         Debug.Log("PLane instantiated");
 
     }
@@ -79,6 +80,14 @@ public class ControllerInput : MonoBehaviour
             Vector3 tipPos = controller.position + controller.TransformDirection(tipOffset);
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(tipPos, gizmosSize);
+        }
+    }
+
+    public void DeleteBoards()
+    {
+        foreach (var board in boards)
+        {
+            Destroy(board);
         }
     }
 }
