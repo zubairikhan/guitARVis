@@ -105,7 +105,6 @@ public class Fret : MonoBehaviour
     public void SwitchOnScale()
     {
         //SetInScale(true);
-        Debug.Log("switching on: " + this.gameObject.name);
         SetColor(scaleColor);
     }
 

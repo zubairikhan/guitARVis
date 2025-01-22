@@ -339,7 +339,7 @@ MonoBehaviour:
   errorColor: {r: 1, g: 0, b: 0, a: 1}
   scaleColor: {r: 0, g: 1, b: 0, a: 1}
   noteNameTextBox: {fileID: 3139969002771180610}
-  maxPlays: 20
+  maxPlays: 10
   note: 
 --- !u!136 &4116934026893850671
 CapsuleCollider:

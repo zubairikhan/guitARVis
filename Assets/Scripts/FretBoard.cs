@@ -10,6 +10,7 @@ public class FretBoard : MonoBehaviour
 {
     [SerializeField] int fretCount;
     [SerializeField] GameObject[] frets;
+    [SerializeField] GameObject[] inlayMarkers;
     [SerializeField] int fretCountPerString;
     [SerializeField] float startingFretDist = 0.035604f;
     [SerializeField] Transform[] startingFretPos;
@@ -38,7 +39,7 @@ public class FretBoard : MonoBehaviour
     {
         stringDirections = ComputeStringDirections(startingFretPos, endingFretPos);
 
-        
+
 
         int currStringIdx = -1;
         float fretDist = 0;
@@ -47,7 +48,7 @@ public class FretBoard : MonoBehaviour
 
         for (int i = 0; i < fretCount; i++)
         {
-            
+
             var fretGameObject = frets[i].gameObject;
             int j = i % (fretCountPerString + 1);
             if (j == 0)
@@ -69,9 +70,6 @@ public class FretBoard : MonoBehaviour
             Vector3 scale = fretGameObject.transform.localScale;
             scale.x = (float)(scale.x * Math.Pow(0.965, j));
             fretGameObject.transform.localScale = scale;
-
-
-            
         }
     }
 
@@ -107,6 +105,25 @@ public class FretBoard : MonoBehaviour
 
 
             frets[i] = gameObject;
+        }
+
+        SetInlayMarkersPosition();
+
+    }
+
+    private void SetInlayMarkersPosition()
+    {
+        for (int i = 0; i < inlayMarkers.Length; i++)
+        {
+            var marker = inlayMarkers[i];
+            Vector3 currPos = marker.transform.localPosition;
+            float newXPos = marker.GetComponent<InlayMarker>().fret.localPosition.x;
+            float newYPos = marker.GetComponent<InlayMarker>().fret.localPosition.y - 0.015f;
+            if (i == 5)
+            {
+                newYPos -= 0.01f;
+            }
+            marker.transform.localPosition = new Vector3(newXPos, newYPos, currPos.z);
         }
     }
 
