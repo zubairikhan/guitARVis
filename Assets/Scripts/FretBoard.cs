@@ -15,6 +15,8 @@ public class FretBoard : MonoBehaviour
     [SerializeField] float startingFretDist = 0.035604f;
     [SerializeField] Transform[] startingFretPos;
     [SerializeField] Transform[] endingFretPos;
+    [SerializeField] Transform centerEyeAnchor;
+    [SerializeField] float distanceInfrontOfCamera = 0.5f;
     Vector3[] stringDirections;
     
     [SerializeField] static int[] fretDistChanges = { 2, 4, 8, 12, 16, 20 };
@@ -24,6 +26,7 @@ public class FretBoard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.transform.position = centerEyeAnchor.position + centerEyeAnchor.forward * distanceInfrontOfCamera ;
         frets = new GameObject[fretCount];
         
         //SetupFretPositionsV2();
