@@ -3,32 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NoteNameToggle : MonoBehaviour
+public class ToggleMenu : MonoBehaviour
 {
     Toggle toggle;
-    FretBoard fretBoard;
-    ApplicationManager applicationManager;
+    [SerializeField] GameObject Menu;
 
     // Start is called before the first frame update
     void Start()
     {
-        applicationManager = FindObjectOfType<ApplicationManager>();
         toggle = GetComponent<Toggle>();
-        fretBoard = FindObjectOfType<FretBoard>();
         toggle.onValueChanged.AddListener(OnToggleChanged);
     }
 
     void OnToggleChanged(bool isOn)
     {
-        Debug.Log("Toggle val: " + isOn);
-        applicationManager.SetHintsEnabled(isOn);
-        if (fretBoard != null)
-        {
-            fretBoard.ToggleHintsForAllowedNotes(isOn);
-        }
+        Debug.Log("Toggle: " + isOn);
+        Menu.SetActive(isOn);
     }
 
-    void OnDestroy()
+    void OnDisable()
     {
         if (toggle != null)
         {
