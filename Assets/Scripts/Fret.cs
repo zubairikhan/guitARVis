@@ -7,10 +7,10 @@ using UnityEngine.UI;
 
 public class Fret : MonoBehaviour
 {
-    [SerializeField] Color deactivatedColor = Color.white;
-    [SerializeField] Color activatedColor = Color.blue;
-    [SerializeField] Color errorColor = Color.red;
-    [SerializeField] Color scaleColor = Color.green;
+    [SerializeField] Color deactivatedColor = Color.white; //when note is not active
+    [SerializeField] Color activatedColor = Color.blue; //when note is played
+    [SerializeField] Color errorColor = Color.red; //when note is played but its an error
+    [SerializeField] Color scaleColor = Color.green; //highlighting notes in selected scale
     [SerializeField] TMP_Text noteNameTextBox;
     MeshRenderer objRenderer;
     private bool isActivated;

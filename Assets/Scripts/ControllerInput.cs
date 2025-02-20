@@ -45,6 +45,7 @@ public class ControllerInput : MonoBehaviour
         }
     }
 
+    //TODO: get controller position by either OVRInput.Controller or controller prefab
     private Vector3 GetControllerTipPosition(OVRInput.Controller ovrController)
     {
         Vector3 ovrPos = OVRInput.GetLocalControllerPosition(ovrController);

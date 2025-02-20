@@ -10,12 +10,12 @@ public class PlayMode : MonoBehaviour, IProcess
 {
     [SerializeField] FretBoard fretBoard;
     StatisticsPanel statisticsPanel;
-    [SerializeField] public string[] AllowedNotes { get; private set;}
-    [SerializeField] int velocityThreshold = 80;
+    [SerializeField] public string[] AllowedNotes { get; private set;} //notes that are in the scale chosen to play
+    [SerializeField] int velocityThreshold = 80;  //notes played with lower velocity are not considered played.
     [SerializeField] protected bool showErrors;
-    [SerializeField] string selectedScale = "Aminor Pentatonic";
+    [SerializeField] string selectedScale = "Aminor Pentatonic"; //starting default scale
     protected DateTime startTime;
-    protected LinkedList<Note> notes;
+    protected LinkedList<Note> notes;  //list of currently active note events
     protected Dictionary<string, Fret> frets = new Dictionary<string, Fret>();
     int countCorrectNotes = 0;
     int countIncorrectNotes = 0;

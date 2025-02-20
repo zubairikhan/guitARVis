@@ -8,20 +8,18 @@ using static UnityEngine.GraphicsBuffer;
 
 public class FretBoard : MonoBehaviour
 {
-    [SerializeField] int fretCount;
-    [SerializeField] GameObject[] frets;
+    [SerializeField] int fretCount; //total number of notes on the neck. 21 frets on 6 strings, plus 6 open strings = 21*6 + 6 = 132. corresponds to 132 fret game objects
+    [SerializeField] GameObject[] frets; 
     [SerializeField] GameObject[] inlayMarkers;
-    [SerializeField] int fretCountPerString;
-    [SerializeField] float startingFretDist = 0.035604f;
-    [SerializeField] Transform[] startingFretPos;
-    [SerializeField] Transform[] endingFretPos;
+    [SerializeField] int fretCountPerString; // number of frets. 21
+    [SerializeField] float startingFretDist = 0.035604f; // distance from the open note fret to the first fret
+    [SerializeField] Transform[] startingFretPos; // positions of open string note object on each of the 6 strings
+    [SerializeField] Transform[] endingFretPos; //positions of 21st fret on each of the 6 strings. This is marked by empty game objects placed on each string where the 21st fret would be
     [SerializeField] Transform centerEyeAnchor;
     [SerializeField] float distanceInfrontOfCamera = 0.5f;
     Vector3[] stringDirections;
     
-    [SerializeField] static int[] fretDistChanges = { 2, 4, 8, 12, 16, 20 };
     
-    HashSet<int> fretDistChangesHashSet = new HashSet<int>(fretDistChanges);
      
     // Start is called before the first frame update
     void Start()
@@ -38,6 +36,7 @@ public class FretBoard : MonoBehaviour
         SetNotesOnFrets();
     }
 
+    //deprecated. use V2
     private void SetupFretPositionsV1()
     {
         stringDirections = ComputeStringDirections(startingFretPos, endingFretPos);
