@@ -1,3 +1,4 @@
+using OVRSimpleJSON;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,10 +10,14 @@ public class L1Menu : MonoBehaviour
     [SerializeField] public GameObject L2MenuScales;
     private bool isL2MenuModesEnabled;
     private bool isL2MenuScalesEnabled;
+    FretBoard fretBoard;
+    ApplicationManager applicationManager;
+    bool isOn;
     // Start is called before the first frame update
     void Start()
     {
-        
+        applicationManager = FindObjectOfType<ApplicationManager>();
+        fretBoard = FindObjectOfType<FretBoard>();
     }
 
     // Update is called once per frame
@@ -38,5 +43,15 @@ public class L1Menu : MonoBehaviour
             ToggleL2MenuModes();
         }
         L2MenuScales.SetActive(isL2MenuScalesEnabled);
+    }
+
+    public void ToggleHints()
+    {
+        isOn = !isOn;
+        applicationManager.SetHintsEnabled(isOn);
+        if (fretBoard != null)
+        {
+            fretBoard.ToggleHintsForAllowedNotes(isOn);
+        }
     }
 }

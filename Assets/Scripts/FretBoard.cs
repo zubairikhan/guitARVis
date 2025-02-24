@@ -27,11 +27,11 @@ public class FretBoard : MonoBehaviour
         this.transform.position = centerEyeAnchor.position + centerEyeAnchor.forward * distanceInfrontOfCamera ;
         frets = new GameObject[fretCount];
         
-        //SetupFretPositionsV2();
-        for (int i = 0; i < fretCount; i++)
-        {
-            frets[i] = this.gameObject.transform.GetChild(i).gameObject;
-        }
+        SetupFretPositionsV2();
+        //for (int i = 0; i < fretCount; i++)
+        //{
+        //    frets[i] = this.gameObject.transform.GetChild(i).gameObject;
+        //}
 
         SetNotesOnFrets();
     }
