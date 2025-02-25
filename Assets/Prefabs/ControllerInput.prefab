@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testPoint: {fileID: 8462500027264804939, guid: 05ab0ea329c3b7440b432ad850cd3a36, type: 3}
-  tipOffset: {x: 0, y: 0, z: 0.04}
+  tipOffset: {x: 0.009, y: 0, z: 0.04}
+  boardShift: {x: 0, y: 0, z: 0.025}
   controller: {fileID: 0}
   leftControllerAnchor: {fileID: 0}
   gizmosSize: 0.005

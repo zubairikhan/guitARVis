@@ -739,7 +739,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1317988813617620905, guid: c0573e73449f142e794516ef4c6ba522, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1576279861772480514, guid: c0573e73449f142e794516ef4c6ba522, type: 3}
       propertyPath: m_AnchorMax.x
@@ -956,10 +956,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1440366932786937990, guid: 449d8c7f1e6a67e40b6e55aae5881cf5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1344661509}
     - target: {fileID: 2144138820249697723, guid: 449d8c7f1e6a67e40b6e55aae5881cf5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1072,14 +1068,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
-    - target: {fileID: 6698130628177118301, guid: 449d8c7f1e6a67e40b6e55aae5881cf5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1617653800}
-    - target: {fileID: 7348620689486586730, guid: 449d8c7f1e6a67e40b6e55aae5881cf5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1617653800}
     - target: {fileID: 8592095952612633241, guid: 449d8c7f1e6a67e40b6e55aae5881cf5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

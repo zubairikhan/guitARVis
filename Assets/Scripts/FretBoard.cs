@@ -24,7 +24,7 @@ public class FretBoard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.transform.position = centerEyeAnchor.position + centerEyeAnchor.forward * distanceInfrontOfCamera ;
+        //this.transform.position = centerEyeAnchor.position + centerEyeAnchor.forward * distanceInfrontOfCamera ;
         frets = new GameObject[fretCount];
         
         SetupFretPositionsV2();
@@ -77,6 +77,7 @@ public class FretBoard : MonoBehaviour
 
     public void SetupFretPositionsV2()
     {
+        Debug.Log("SetupFretPositionsV2");
         stringDirections = ComputeStringDirections(startingFretPos, endingFretPos);
 
         frets = new GameObject[fretCount];
