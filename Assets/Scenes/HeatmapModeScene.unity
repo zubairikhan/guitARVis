@@ -788,7 +788,7 @@ PrefabInstance:
       objectReference: {fileID: 979893306}
     - target: {fileID: 5331202829053975992, guid: b4e3b7e5b42b0654ebfe3d3cae996364, type: 3}
       propertyPath: m_Name
-      value: ControllerInput (1)
+      value: ControllerInput
       objectReference: {fileID: 0}
     - target: {fileID: 5879706000147348542, guid: b4e3b7e5b42b0654ebfe3d3cae996364, type: 3}
       propertyPath: m_LocalPosition.x
@@ -840,59 +840,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5359655516266284160, guid: b8efa116b0e66b840a946b50d8bf631d, type: 3}
   m_PrefabInstance: {fileID: 8972463908829057846}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1054267520
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1054267522}
-  - component: {fileID: 1054267521}
-  m_Layer: 0
-  m_Name: ControllerInput
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1054267521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1054267520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 188d1f9ac63484c4eb58ca1ad645daeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  testPoint: {fileID: 8462500027264804939, guid: 05ab0ea329c3b7440b432ad850cd3a36, type: 3}
-  tipOffset: {x: 0.009, y: 0, z: 0.04}
-  boardShift: {x: 0, y: 0, z: 0.025}
-  rightController: {fileID: 0}
-  leftControllerAnchor: {fileID: 979893306}
-  gizmosSize: 0.005
-  boardPlane: {fileID: 1292490709520671236, guid: 2c8885bc2a517a34aa8c683b86953a5b, type: 3}
-  xStretch: 0.0554
-  yStretch: 0.005
---- !u!4 &1054267522
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1054267520}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1135986500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1360,7 +1307,7 @@ PrefabInstance:
     - target: {fileID: 4666757161495310576, guid: c0573e73449f142e794516ef4c6ba522, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1054267521}
+      objectReference: {fileID: 0}
     - target: {fileID: 7219520781331775752, guid: c0573e73449f142e794516ef4c6ba522, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1786,10 +1733,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7574962319103241645, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
-      propertyPath: centerEyeAnchor
-      value: 
-      objectReference: {fileID: 8972463908829057847}
     - target: {fileID: 8387328891272385819, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
       propertyPath: m_Name
       value: Fret Board
@@ -1860,11 +1803,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8efa116b0e66b840a946b50d8bf631d, type: 3}
---- !u!4 &8972463908829057847 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5364072643733971962, guid: b8efa116b0e66b840a946b50d8bf631d, type: 3}
-  m_PrefabInstance: {fileID: 8972463908829057846}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1877,7 +1815,6 @@ SceneRoots:
   - {fileID: 1135986501}
   - {fileID: 6840522485647804665}
   - {fileID: 8972463908829057846}
-  - {fileID: 1054267522}
   - {fileID: 325772874}
   - {fileID: 703420119}
   - {fileID: 961183923}

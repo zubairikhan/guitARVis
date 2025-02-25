@@ -15,8 +15,6 @@ public class FretBoard : MonoBehaviour
     [SerializeField] float startingFretDist = 0.035604f; // distance from the open note fret to the first fret
     [SerializeField] Transform[] startingFretPos; // positions of open string note object on each of the 6 strings
     [SerializeField] Transform[] endingFretPos; //positions of 21st fret on each of the 6 strings. This is marked by empty game objects placed on each string where the 21st fret would be
-    [SerializeField] Transform centerEyeAnchor;
-    [SerializeField] float distanceInfrontOfCamera = 0.5f;
     Vector3[] stringDirections;
     
     
@@ -24,7 +22,6 @@ public class FretBoard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //this.transform.position = centerEyeAnchor.position + centerEyeAnchor.forward * distanceInfrontOfCamera ;
         frets = new GameObject[fretCount];
         
         SetupFretPositionsV2();

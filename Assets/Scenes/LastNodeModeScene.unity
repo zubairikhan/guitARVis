@@ -283,11 +283,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5359655516266284160, guid: b8efa116b0e66b840a946b50d8bf631d, type: 3}
   m_PrefabInstance: {fileID: 355561423}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &355561426 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5364072643733971962, guid: b8efa116b0e66b840a946b50d8bf631d, type: 3}
-  m_PrefabInstance: {fileID: 355561423}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &936820794
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -586,6 +581,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3040520429004635611, guid: b4e3b7e5b42b0654ebfe3d3cae996364, type: 3}
       propertyPath: controller
+      value: 
+      objectReference: {fileID: 355561424}
+    - target: {fileID: 3040520429004635611, guid: b4e3b7e5b42b0654ebfe3d3cae996364, type: 3}
+      propertyPath: rightController
       value: 
       objectReference: {fileID: 355561424}
     - target: {fileID: 3040520429004635611, guid: b4e3b7e5b42b0654ebfe3d3cae996364, type: 3}
@@ -996,10 +995,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7574962319103241645, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
-      propertyPath: centerEyeAnchor
-      value: 
-      objectReference: {fileID: 355561426}
     - target: {fileID: 8387328891272385819, guid: a8fb545c466d2c64eb70882f6b098e2b, type: 3}
       propertyPath: m_Name
       value: Fret Board
