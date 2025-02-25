@@ -63,4 +63,14 @@ public class Helper
     };
 }
 
+public enum MoveDirection
+{
+    Left,
+    Right,
+    Up,
+    Down,
+    Backwards,
+    Forwards
+}
+
 
