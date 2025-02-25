@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class ApplicationManager : MonoBehaviour
 {
-    FretBoard fretBoard;
     MidiManager midiManager;
     PlayMode playMode;
     bool hintsEnabled = true;
@@ -13,7 +12,6 @@ public class ApplicationManager : MonoBehaviour
     void Start()
     {
         midiManager = FindObjectOfType<MidiManager>();
-        fretBoard = FindObjectOfType<FretBoard>();
         playMode = FindObjectOfType<PlayMode>();
     }
 

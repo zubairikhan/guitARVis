@@ -652,10 +652,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ApplicationManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5923522673305277701, guid: 3ae337f11748da54c813bac54d8b27e4, type: 3}
-      propertyPath: fretBoard
-      value: 
-      objectReference: {fileID: 1617653800}
     - target: {fileID: 7119141222923560809, guid: 3ae337f11748da54c813bac54d8b27e4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -699,28 +695,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 70952863588790654, guid: 3ae337f11748da54c813bac54d8b27e4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 54202788509272075}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ae337f11748da54c813bac54d8b27e4, type: 3}
---- !u!1 &54202788509272074 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 70952863588790654, guid: 3ae337f11748da54c813bac54d8b27e4, type: 3}
-  m_PrefabInstance: {fileID: 54202788509272073}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &54202788509272075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 54202788509272074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ddcd5f3c193dc14a90f263c3597103f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &108736507679763453
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -332,6 +332,7 @@ MonoBehaviour:
   - {fileID: 520106891213141734}
   - {fileID: 4283703617129378113}
   - {fileID: 5471219820737392377}
+  startingPos: {x: 0, y: -0.3, z: 0.7}
 --- !u!54 &7910495627531298256
 Rigidbody:
   m_ObjectHideFlags: 0
