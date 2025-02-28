@@ -6,11 +6,13 @@ public class FretBoardStation : MonoBehaviour
 {
     [SerializeField] float moveUnit = 0.005f; 
     ApplicationManager applicationManager;
+    MeshRenderer meshRenderer;
     // Start is called before the first frame update
     void Start()
     {
         applicationManager = FindObjectOfType<ApplicationManager>();
         applicationManager.SetFretBoardStation(this.gameObject);
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
@@ -72,6 +74,17 @@ public class FretBoardStation : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Fretboard")
+            meshRenderer.enabled = false;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Fretboard")
+            meshRenderer.enabled = true;
     }
 }
 
