@@ -16,16 +16,17 @@ public class StatisticsPanel : MonoBehaviour
     void Start()
     {
         playMode = FindObjectOfType<PlayMode>();
-        text = "Correct Notes Played: {0} \n" +
-            "Incorrect Notes Played: {1}\n" +
-            "Accuracy: {2}";
+        text = "Correct Notes Played:\n{0} \n" +
+            "Incorrect Notes Played:\n{1}\n" +
+            "Accuracy:\n{2}";
     }
 
     // Update is called once per frame
     void Update()
     {
         (correct, incorrect) = playMode.GetStatistics();
-        float accuracy = (correct / (correct + incorrect)) * 100;
-        Text.text = String.Format("Correct Notes Played: {0}\nIncorrect Notes Played: {1}\nAccuracy: {2}", correct, incorrect, accuracy);
+        double accuracy = (correct / (correct + incorrect)) * 100;
+        accuracy = double.IsInfinity(accuracy) ? 0 : accuracy;
+        Text.text = String.Format("Correct Notes Played:\n{0}\nIncorrect Notes Played:\n{1}\nAccuracy:\n{2}", correct, incorrect, Math.Round(accuracy, 2));
     }
 }
