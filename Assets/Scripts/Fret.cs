@@ -11,6 +11,8 @@ public class Fret : MonoBehaviour
     [SerializeField] Color activatedColor = Color.blue; //when note is played
     [SerializeField] Color errorColor = Color.red; //when note is played but its an error
     [SerializeField] Color scaleColor = Color.green; //highlighting notes in selected scale
+    [SerializeField] Color rootNoteColor = Color.cyan;  //root note in scale highlighted differently
+    [SerializeField] Color restingColor = Color.black;
     [SerializeField] TMP_Text noteNameTextBox;
     MeshRenderer objRenderer;
     private bool isActivated;
@@ -18,6 +20,8 @@ public class Fret : MonoBehaviour
 
     PlayMode playMode;
     private bool IsInScale => playMode.AllowedNotes.Contains(Note);
+
+    private bool IsRootNote => Note == playMode.AllowedNotes[0];
 
     private int playedCount;
     [SerializeField] int maxPlays = 10;
@@ -44,6 +48,25 @@ public class Fret : MonoBehaviour
         objRenderer = this.gameObject.GetComponent<MeshRenderer>();
         SetColor(deactivatedColor);
         SetNoteName();
+    }
+
+    private Color GetRestingColor()
+    {
+        restingColor = deactivatedColor;
+
+        if (applicationManager.IsHintsEnabled())
+        {
+            if (IsRootNote)
+            {
+                restingColor = rootNoteColor;
+            }
+            else if (IsInScale)
+            {
+                restingColor = scaleColor;
+            }
+        }
+
+        return restingColor;
     }
 
     // Update is called once per frame
@@ -90,10 +113,10 @@ public class Fret : MonoBehaviour
 
     private void Deactivate()
     {
-        var targetColor = applicationManager.IsHintsEnabled() && IsInScale ? scaleColor : deactivatedColor;
+        //var targetColor = applicationManager.IsHintsEnabled() && IsInScale ? scaleColor : deactivatedColor;
         SetActivated(false);
         SetError(false);
-        SetColor(targetColor);
+        SetColor(GetRestingColor());
     }
 
     public void MarkPlayed(bool error)
@@ -104,8 +127,7 @@ public class Fret : MonoBehaviour
 
     public void SwitchOnScale()
     {
-        //SetInScale(true);
-        SetColor(scaleColor);
+       SetColor(GetRestingColor());      
     }
 
     public void ToggleNote(bool status)

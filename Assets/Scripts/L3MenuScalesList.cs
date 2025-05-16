@@ -33,7 +33,6 @@ public class L3MenuScalesList : MonoBehaviour
     {
         foreach (var item in menuItems)
         {
-            Debug.Log(item);
             GameObject newBtn = Instantiate(buttonPrefab, contentParent);
             newBtn.GetComponentInChildren<TMP_Text>().text = item;
             newBtn.GetComponent<Button>().onClick.AddListener(() => OnMenuItemClick(item));

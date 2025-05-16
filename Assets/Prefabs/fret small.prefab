@@ -102,6 +102,8 @@ MonoBehaviour:
   activatedColor: {r: 0, g: 0, b: 1, a: 1}
   errorColor: {r: 1, g: 0, b: 0, a: 1}
   scaleColor: {r: 0, g: 1, b: 0, a: 1}
+  rootNoteColor: {r: 0, g: 0.42745098, b: 0, a: 1}
+  restingColor: {r: 0, g: 0, b: 0, a: 1}
   noteNameTextBox: {fileID: 5951042591384700536}
   maxPlays: 20
   note: 
