@@ -7,7 +7,7 @@ using System.Linq;
 
 public class MidiManager : MonoBehaviour
 {
-    [SerializeField] PlayMode playMode;
+    [SerializeField] PlayMode[] fretBoardPlayModes;
     private IInputDevice _inputDevice;
     
     // Start is called before the first frame update
@@ -31,7 +31,11 @@ public class MidiManager : MonoBehaviour
 
     private void OnEventReceived(object sender, MidiEventReceivedEventArgs e)
     {
-        playMode.Process(sender, e);
+        foreach(var playMode in fretBoardPlayModes)
+        {
+            playMode.Process(sender, e);
+        }
+        
     }
 
     public void ReleaseMidiInput()

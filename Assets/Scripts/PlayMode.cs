@@ -25,7 +25,7 @@ public class PlayMode : MonoBehaviour, IProcess
     {
         startTime = DateTime.Now;
         notes = new LinkedList<Note>();
-        fretBoard = FindObjectOfType<FretBoard>();
+        //fretBoard = GetComponent<FretBoard>();
         statisticsPanel = FindObjectOfType<StatisticsPanel>();
         PopulateFretsArray(fretBoard);
         ChangeNotesToPractice(selectedScale);

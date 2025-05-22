@@ -43,7 +43,7 @@ public class Fret : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playMode = FindObjectOfType<PlayMode>();
+        playMode = this.gameObject.GetComponentInParent<PlayMode>();
         applicationManager = FindObjectOfType<ApplicationManager>();
         objRenderer = this.gameObject.GetComponent<MeshRenderer>();
         SetColor(deactivatedColor);
@@ -72,7 +72,8 @@ public class Fret : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (applicationManager.GetCurrentPlayMode() == typeof(LastNotePlayMode))
+        
+        if (playMode.GetType() == typeof(LastNotePlayMode))
         {
             if (isActivated)
             {
@@ -85,7 +86,7 @@ public class Fret : MonoBehaviour
             }
         }
 
-        if (applicationManager.GetCurrentPlayMode() == typeof(HeatmapPlayMode))
+        if (playMode.GetType() == typeof(HeatmapPlayMode))
         {
             if (isActivated)
             {
@@ -134,8 +135,7 @@ public class Fret : MonoBehaviour
     {
         if (playedCount != 0 ) { return; }
 
-        var targetColor = status && IsInScale ? scaleColor : deactivatedColor;
-        SetColor(targetColor);
+        SetColor(GetRestingColor());
     }
 
     public void ResetFret()

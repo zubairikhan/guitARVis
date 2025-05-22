@@ -8,13 +8,13 @@ public class L3MenuScalesList : MonoBehaviour
 {
     [SerializeField] GameObject buttonPrefab;
     [SerializeField] Transform contentParent;
-    private PlayMode playMode;
+    private PlayMode[] playModes;
     private List<string> menuItems;
     // Start is called before the first frame update
     void Start()
     {
         //PopulateMenu();
-        playMode = FindObjectOfType<PlayMode>();
+        playModes = FindObjectsOfType<PlayMode>();
     }
 
     public void SetMenuItems(List<string> items)
@@ -58,8 +58,11 @@ public class L3MenuScalesList : MonoBehaviour
 
     void OnMenuItemClick(string itemName)
     {
-        playMode.ChangeNotesToPractice(itemName);
-        //Disable();
+        foreach (var playMode in playModes)
+        {
+            playMode.ChangeNotesToPractice(itemName);
+
+        }
     }
 
     public void Enable()

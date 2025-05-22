@@ -12,7 +12,7 @@ public class L1Menu : MonoBehaviour
     [SerializeField] public Button LetThereBeFretsBtn;
     private bool isL2MenuModesEnabled;
     private bool isL2MenuScalesEnabled;
-    FretBoard fretBoard;
+    FretBoard[] fretBoards;
     ControllerInput controllerInput;
     ApplicationManager applicationManager;
     bool isOn;
@@ -20,7 +20,7 @@ public class L1Menu : MonoBehaviour
     void Start()
     {
         applicationManager = FindObjectOfType<ApplicationManager>();
-        fretBoard = FindObjectOfType<FretBoard>();
+        fretBoards = FindObjectsOfType<FretBoard>();
         controllerInput = FindObjectOfType<ControllerInput>();
     }
 
@@ -53,21 +53,30 @@ public class L1Menu : MonoBehaviour
     {
         isOn = !isOn;
         applicationManager.SetHintsEnabled(isOn);
-        if (fretBoard != null)
+        if (fretBoards != null)
         {
-            fretBoard.ToggleHintsForAllowedNotes(isOn);
+            foreach (var fretBoard in fretBoards)
+            {
+                fretBoard.ToggleHintsForAllowedNotes(isOn);
+            }
         }
     }
 
     public void ExpandFretBoard()
     {
         LetThereBeFretsBtn.interactable = false;
-        fretBoard.SetupFretPositionsV2();
+        foreach (var fretBoard in fretBoards)
+        {
+            fretBoard.SetupFretPositionsV2();
+        }
     }
 
     public void ResetFretBoard()
     {
-        fretBoard.ResetFretBoard();
+        foreach (var fretBoard in fretBoards)
+        {
+            fretBoard.ResetFretBoard();
+        }
     }
 
     public void DeleteBoards()

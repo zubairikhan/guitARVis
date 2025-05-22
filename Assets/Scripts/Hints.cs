@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Hints : MonoBehaviour
 {
-    FretBoard fretBoard;
+    FretBoard[] fretBoards;
     ApplicationManager applicationManager;
     bool isOn;
 
@@ -12,16 +12,19 @@ public class Hints : MonoBehaviour
     void Start()
     {
         applicationManager = FindObjectOfType<ApplicationManager>();
-        fretBoard = FindObjectOfType<FretBoard>();
+        fretBoards = FindObjectsOfType<FretBoard>();
     }
 
     public void ToggleHints()
     {
         isOn = !isOn;
         applicationManager.SetHintsEnabled(isOn);
-        if (fretBoard != null)
+        if (fretBoards != null)
         {
-            fretBoard.ToggleHintsForAllowedNotes(isOn);
+            foreach(FretBoard fretboard in fretBoards)
+            {
+                fretboard.ToggleHintsForAllowedNotes(isOn);
+            }
         }
     }
 

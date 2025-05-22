@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class NoteNameToggle : MonoBehaviour
 {
     Toggle toggle;
-    FretBoard fretBoard;
+    FretBoard[] fretBoards;
     ApplicationManager applicationManager;
 
     // Start is called before the first frame update
@@ -14,7 +14,7 @@ public class NoteNameToggle : MonoBehaviour
     {
         applicationManager = FindObjectOfType<ApplicationManager>();
         toggle = GetComponent<Toggle>();
-        fretBoard = FindObjectOfType<FretBoard>();
+        fretBoards = FindObjectsOfType<FretBoard>();
         toggle.onValueChanged.AddListener(OnToggleChanged);
     }
 
@@ -22,9 +22,12 @@ public class NoteNameToggle : MonoBehaviour
     {
         Debug.Log("Toggle val: " + isOn);
         applicationManager.SetHintsEnabled(isOn);
-        if (fretBoard != null)
+        if (fretBoards != null)
         {
-            fretBoard.ToggleHintsForAllowedNotes(isOn);
+            foreach (var fretBoard in fretBoards)
+            {
+                fretBoard.ToggleHintsForAllowedNotes(isOn);
+            }
         }
     }
 
