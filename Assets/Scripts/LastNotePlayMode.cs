@@ -10,10 +10,9 @@ using UnityEngine;
 
 public class LastNotePlayMode : PlayMode
 {
-    public override void Process(object sender, MidiEventReceivedEventArgs e)
+    public override void Process(MidiEvent e)
     {
         var currentTime = DateTime.Now;
-        var midiDevice = (MidiDevice)sender;
         Note note = null;
 
         if (IsNotePlayed(e))
@@ -33,13 +32,17 @@ public class LastNotePlayMode : PlayMode
 
         else if (IsNoteStopped(e))
         {
-            var midi = ((NoteEvent)e.Event).NoteNumber;
+            var midi = ((NoteEvent)e).NoteNumber;
             note = RemoveNote(midi);
-            note.SetEndTime((currentTime - startTime).TotalSeconds);
-            DeactivateNote(note.StringNum, note.Fret);
+            if (note != null)
+            {
+                Debug.Log("error note: " + midi);
+                note.SetEndTime((currentTime - startTime).TotalSeconds);
+                DeactivateNote(note.StringNum, note.Fret);
+            }
         }
 
-        LogNote(e, midiDevice, note);
+        LogNote(e, note);
     }
 
     

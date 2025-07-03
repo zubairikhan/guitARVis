@@ -6,10 +6,9 @@ using UnityEngine;
 
 public class HeatmapPlayMode : PlayMode
 {
-    public override void Process(object sender, MidiEventReceivedEventArgs e)
+    public override void Process(MidiEvent e)
     {
         var currentTime = DateTime.Now;
-        var midiDevice = (MidiDevice)sender;
         Note note = null;
 
         if (IsNotePlayed(e))
@@ -29,11 +28,11 @@ public class HeatmapPlayMode : PlayMode
 
         else if (IsNoteStopped(e))
         {
-            var midi = ((NoteEvent)e.Event).NoteNumber;
+            var midi = ((NoteEvent)e).NoteNumber;
             note = RemoveNote(midi);
             note.SetEndTime((currentTime - startTime).TotalSeconds);
         }
 
-        LogNote(e, midiDevice, note);
+        LogNote(e, note);
     }
 }

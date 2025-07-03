@@ -72,35 +72,35 @@ public class PlayMode : MonoBehaviour, IProcess
         }
     }
 
-    protected bool IsNoteStopped(MidiEventReceivedEventArgs e)
+    protected bool IsNoteStopped(MidiEvent e)
     {
-        return e.Event.EventType == MidiEventType.NoteOff;
+        return e.EventType == MidiEventType.NoteOff;
     }
 
-    protected bool IsNotePlayed(MidiEventReceivedEventArgs e)
+    protected bool IsNotePlayed(MidiEvent e)
     {
-        return e.Event.EventType == MidiEventType.NoteOn && ((NoteEvent)e.Event).Velocity > velocityThreshold;
+        return e.EventType == MidiEventType.NoteOn && ((NoteEvent)e).Velocity > velocityThreshold;
     }
-    protected void LogNote(MidiEventReceivedEventArgs e, MidiDevice midiDevice, Note note)
+    protected void LogNote(MidiEvent e, Note note)
     {
         if (note != null)
         {
-            var outputString = $"Event received from '{midiDevice.Name}' at {DateTime.Now}: {e.Event}. " +
+            var outputString = $"Event received at {DateTime.Now}: {e}. " +
             $"Midi: {note.Midi}. Name: {note.NoteName}. String: {note.StringNum}. Fret: {note.Fret}. Velocity: {note.Velocity} " +
             $"StartTime: {note.StartTime}. EndTime: {note.EndTime}. Note Duration: {note.NoteDuration}";
             Debug.Log(outputString);
         }
     }
 
-    protected Note ComputeNoteProperties(MidiEventReceivedEventArgs e, DateTime currentTime)
+    protected Note ComputeNoteProperties(MidiEvent e, DateTime currentTime)
     {
-        var midi = ((NoteEvent)e.Event).NoteNumber;
-        var channel = ((ChannelEvent)e.Event).Channel;
+        var midi = ((NoteEvent)e).NoteNumber;
+        var channel = ((ChannelEvent)e).Channel;
         var stringNum = channel + 1;
         var noteName = Helper.noteNames[midi % 12];
         var noteStartTime = (currentTime - startTime).TotalSeconds;
         var fret = midi - Helper.tuningPitchEStd[channel];
-        var velocity = ((NoteEvent)e.Event).Velocity;
+        var velocity = ((NoteEvent)e).Velocity;
 
         return new Note(midi, noteName, stringNum, fret, velocity, noteStartTime, currentTime);
     }
@@ -182,10 +182,10 @@ public class PlayMode : MonoBehaviour, IProcess
         return (countCorrectNotes, countIncorrectNotes);
     }
 
-    public virtual void Process(object sender, MidiEventReceivedEventArgs e) { }
+    public virtual void Process(MidiEvent e) { }
 }
 
 interface IProcess
 {
-    void Process(object sender, MidiEventReceivedEventArgs e);
+    void Process(MidiEvent e);
 }
