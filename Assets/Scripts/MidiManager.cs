@@ -8,6 +8,9 @@ using System.Linq;
 public class MidiManager: MonoBehaviour
 {
     [SerializeField] PlayMode[] fretBoardPlayModes;
+    [SerializeField] PlayMode fretBoardPlayBack;
+    [SerializeField] GameObject recordingLight;
+
     public bool IsRecording { get; private set; }
     public bool IsPlaying { get; private set; }
     
@@ -53,7 +56,7 @@ public class MidiManager: MonoBehaviour
 
     void Start()
     {
-        _recorder = new MidiEventRecorder(this);
+        _recorder = new MidiEventRecorder(this, recordingLight);
         _player = GetComponent<MidiEventPlayer>();
 
         try
@@ -81,8 +84,11 @@ public class MidiManager: MonoBehaviour
 
     public void StopRecording()
     {
-        IsRecording = false;
-        _recorder.StopRecording();
+        if (IsRecording)
+        {
+            IsRecording = false;
+            _recorder.StopRecording();
+        }
     }
 
     public void PlayBackRecording()
@@ -109,9 +115,12 @@ public class MidiManager: MonoBehaviour
 
     public void StopPlayBackRecording()
     {
-        Debug.Log("Playback stopped");
-        IsPlaying = false;
-        _player.StopEvents();
+        if (IsPlaying)
+        {
+            Debug.Log("Playback stopped");
+            IsPlaying = false;
+            _player.StopEvents();
+        }
     }
 
     void Update()
@@ -153,6 +162,11 @@ public class MidiManager: MonoBehaviour
         {
             playMode.Process(e);
         }
+    }
+
+    public void ProcessNotesForPlayback(MidiEvent e)
+    {
+        fretBoardPlayBack.Process(e);
     }
 
 }

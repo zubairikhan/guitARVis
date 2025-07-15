@@ -9,10 +9,13 @@ public class MidiEventPlayer: MonoBehaviour
     private List<TimedMidiEvent> _eventsToPlay;
     private Coroutine _playbackCoroutine;
     private MidiManager _midiManager;
+    [SerializeField] GameObject recordingLight;
+    private MeshRenderer _recordingLightMeshRenderer;
 
     void Start()
     {
         _midiManager = FindObjectOfType<MidiManager>();
+        _recordingLightMeshRenderer = recordingLight.GetComponent<MeshRenderer>();
     }
     
 
@@ -25,6 +28,7 @@ public class MidiEventPlayer: MonoBehaviour
 
         _eventsToPlay = new List<TimedMidiEvent>(events);
         _playbackCoroutine = StartCoroutine(PlayEventsWithTiming());
+        ChangeRecordingLight(Color.green);
     }
 
     public void StopEvents()
@@ -32,7 +36,13 @@ public class MidiEventPlayer: MonoBehaviour
         if (_playbackCoroutine != null)
         {
             StopCoroutine(_playbackCoroutine);
+            ChangeRecordingLight(Color.white);
         }
+    }
+
+    private void ChangeRecordingLight(Color color)
+    {
+        _recordingLightMeshRenderer.material.color = color;
     }
 
     private IEnumerator PlayEventsWithTiming()
@@ -62,7 +72,7 @@ public class MidiEventPlayer: MonoBehaviour
 
             // Process the event (in this case just print to console)
             //PrintEvent(timedEvent.Event);
-            _midiManager.ProcessNotes(timedEvent.Event);
+            _midiManager.ProcessNotesForPlayback(timedEvent.Event);
         }
     }
 

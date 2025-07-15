@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Melanchall.DryWetMidi.Multimedia;
 using UnityEngine;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class MidiEventRecorder
 {
@@ -11,10 +10,12 @@ public class MidiEventRecorder
     private DateTime _recordingStartTime;
     //private bool _isRecording = false;
     private MidiManager _midiManager;
+    private MeshRenderer _recordingLightMeshRenderer;
 
-    public MidiEventRecorder(MidiManager midiManager)
+    public MidiEventRecorder(MidiManager midiManager, GameObject recordingLight)
     {
         _midiManager = midiManager;
+        _recordingLightMeshRenderer = recordingLight.GetComponent<MeshRenderer>();
     }
 
     private void Start()
@@ -35,6 +36,7 @@ public class MidiEventRecorder
         //_isRecording = true;
         //_inputDevice.StartEventsListening();
         Debug.Log("MIDI recording started");
+        ChangeRecordingLight(Color.red);
     }
 
     public void StopRecording()
@@ -42,6 +44,12 @@ public class MidiEventRecorder
         //_isRecording = false;
         //_inputDevice.StopEventsListening();
         Debug.Log($"MIDI recording stopped. Captured {_recordedEvents.Count} events");
+        ChangeRecordingLight(Color.white);
+    }
+
+    private void ChangeRecordingLight(Color color)
+    {
+        _recordingLightMeshRenderer.material.color = color;
     }
 
     private void OnMidiEventReceived(object sender, MidiEventReceivedEventArgs e)
