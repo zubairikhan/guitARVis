@@ -6,34 +6,61 @@ public class Helper
     public static int[] tuningPitchEStd = {64, 59, 55, 50, 45, 40};
     public static string[] noteNames = {"C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"};
     public static string[] openStringNoteNames = {"E", "B", "G", "D", "A", "E"};
-    public static string[] naturalNotes = { "C", "D", "E", "F", "G", "A", "B" };
+    public static string[] naturalNotes = { "C", "D", "E", "F", "G", "A", "B" }; // menu list items for choosing individual notes to play
+
+    /* 
+     * menu items for choosing scale to play
+     * Whatever values you have here, should also be present in the allowedNotes dictionary
+     * with the appropriate notes. The values should match the keys in the allowedNotes dictionary
+    */
     public static string[] scales = 
-        { "Amajor", "Bmajor", "Cmajor", "Dmajor", "Emajor", "Fmajor", "Gmajor",
-        "Aminor Pentatonic", "Bminor Pentatonic", "Cminor Pentatonic", "Dminor Pentatonic", "Eminor Pentatonic", "Fminor Pentatonic", "Gminor Pentatonic" };
+    { 
+        "A Major", "B Major", "C Major", "D Major", "E Major", "F Major", "G Major",
+        "A Minor", "E Minor", "B Minor", "F# Minor",
+        "A Minor Pentatonic", "C Major Pentatonic", "E Blues",
+        "D Dorian", "G Mixolydian", "A Phrygian", "C Harmonic Minor", "G#/Ab Diminished", "D Whole Tone"
+    };
 
     public static Dictionary<string, string[]> allowedNotes = new Dictionary<string, string[]>
     {
-        { "Amajor", new string[]{ "A", "B", "C#", "D", "E", "F#", "G#"} },
-        { "Bmajor", new string[]{ "B", "C#/Db", "D#/Eb", "E", "F#/Gb", "G#/Ab", "A#/Bb"} },
-        { "Cmajor", new string[]{ "C", "D", "E", "F", "G", "A", "B"} },
-        { "Dmajor", new string[]{ "D", "E", "F#/Gb", "G", "A", "B", "C#/Db"} },
-        { "Emajor", new string[]{ "E", "F#/Gb", "G#/Ab", "A", "B", "C#/Db", "D#/Eb"} },
-        { "Fmajor", new string[]{ "F", "G", "A", "A#/Bb", "C", "D", "E"} },
-        { "Gmajor", new string[]{ "G", "A", "B", "C", "D", "E", "F#/Gb"} },
-        { "Aminor Pentatonic", new string[]{ "A", "B", "C", "D", "E", "F", "G"} },
-        { "Bminor Pentatonic", new string[]{ "B", "C#/Db", "D", "E", "F#/Gb", "G", "A"} },
-        { "Cminor Pentatonic", new string[]{ "C", "D", "D#/Eb", "F", "G", "G#/Ab", "A#/Bb"} },
-        { "Dminor Pentatonic", new string[]{ "D", "E", "F", "G", "A", "A#/Bb", "C"} },
-        { "Eminor Pentatonic", new string[]{ "E", "F#/Gb", "G", "A", "B", "C", "D"} },
-        { "Fminor Pentatonic", new string[]{ "F", "G", "G#/Ab", "A#/Bb", "C", "C#/Db", "D#/Eb"} },
-        { "Gminor Pentatonic", new string[]{ "G", "A", "A#/Bb", "C", "D", "D#/Eb", "F"} },
+        // Notes
         { "A", new string[]{ "A" }},
         { "B", new string[]{ "B" }},
         { "C", new string[]{ "C" }},
         { "D", new string[]{ "D" }},
         { "E", new string[]{ "E" }},
         { "F", new string[]{ "F" }},
-        { "G", new string[]{ "G" }}
+        { "G", new string[]{ "G" }},
+
+        //Major Scales
+        { "C Major", new string[]{ "C", "D", "E", "F", "G", "A", "B" } },
+        { "G Major", new string[]{ "G", "A", "B", "C", "D", "E", "F#/Gb" } },
+        { "D Major", new string[]{ "D", "E", "F#/Gb", "G", "A", "B", "C#/Db" } },
+        { "A Major", new string[]{ "A", "B", "C#/Db", "D", "E", "F#/Gb", "G#/Ab" } },
+        { "E Major", new string[]{ "E", "F#/Gb", "G#/Ab", "A", "B", "C#/Db", "D#/Eb" } },
+        { "F Major", new string[]{ "F", "G", "A", "A#/Bb", "C", "D", "E" } },
+        { "B Major", new string[]{ "B", "C#/Db", "D#/Eb", "E", "F#/Gb", "G#/Ab", "A#/Bb" } },
+
+        // Minor Scales (Natural)
+        { "A Minor", new string[]{ "A", "B", "C", "D", "E", "F", "G" } },
+        { "E Minor", new string[]{ "E", "F#/Gb", "G", "A", "B", "C", "D" } },
+        { "B Minor", new string[]{ "B", "C#/Db", "D", "E", "F#/Gb", "G", "A" } },
+        { "F# Minor", new string[]{ "F#/Gb", "G#/Ab", "A", "B", "C#/Db", "D", "E" } },
+
+        // Pentatonic Scales
+        { "A Minor Pentatonic", new string[]{ "A", "C", "D", "E", "G" } },
+        { "C Major Pentatonic", new string[]{ "C", "D", "E", "G", "A" } },
+        { "E Blues", new string[]{ "E", "G", "A", "A#/Bb", "B", "D" } },
+
+        // Modal Scales
+        { "D Dorian", new string[]{ "D", "E", "F", "G", "A", "B", "C" } },
+        { "G Mixolydian", new string[]{ "G", "A", "B", "C", "D", "E", "F" } },
+        { "A Phrygian", new string[]{ "A", "A#/Bb", "C", "D", "E", "F", "G" } },
+
+        // Other Common Scales
+        { "C Harmonic Minor", new string[]{ "C", "D", "D#/Eb", "F", "G", "G#/Ab", "B" } },
+        { "G#/Ab Diminished", new string[]{ "G#/Ab", "B", "D", "F" } },
+        { "D Whole Tone", new string[]{ "D", "E", "F#/Gb", "G#/Ab", "A#/Bb", "C" } },
     };
 
     public static double[] fretDistsFromNut =

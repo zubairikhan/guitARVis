@@ -13,7 +13,7 @@ public class PlayMode : MonoBehaviour, IProcess
     [SerializeField] public string[] AllowedNotes { get; private set;} //notes that are in the scale chosen to play
     [SerializeField] int velocityThreshold = 80;  //notes played with lower velocity are not considered played.
     [SerializeField] protected bool showErrors;
-    [SerializeField] string selectedScale = "Aminor Pentatonic"; //starting default scale
+    string selectedScale; //starting default scale
     protected DateTime startTime;
     protected LinkedList<Note> notes;  //list of currently active note events
     protected Dictionary<string, Fret> frets = new Dictionary<string, Fret>();
@@ -23,6 +23,7 @@ public class PlayMode : MonoBehaviour, IProcess
     // Start is called before the first frame update
     protected void Start()
     {
+        selectedScale = "E Major";
         startTime = DateTime.Now;
         notes = new LinkedList<Note>();
         //fretBoard = GetComponent<FretBoard>();
