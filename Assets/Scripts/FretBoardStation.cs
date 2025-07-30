@@ -79,12 +79,20 @@ public class FretBoardStation : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Fretboard")
+        {
             meshRenderer.enabled = false;
+            //other.gameObject.GetComponent<FretBoard>().AdjustFretPositions();
+        }
+            
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Fretboard")
+        {
             meshRenderer.enabled = true;
+            //other.gameObject.GetComponent<FretBoard>().ResetFretPositions();
+        }
+            
     }
 }
 

@@ -16,6 +16,7 @@ public class FretBoard : MonoBehaviour
     [SerializeField] Transform[] startingFretPos; // positions of open string note object on each of the 6 strings
     [SerializeField] Transform[] endingFretPos; //positions of 21st fret on each of the 6 strings. This is marked by empty game objects placed on each string where the 21st fret would be
     Vector3[] stringDirections;
+    [SerializeField] float AmtDist = 0.05f;
     
     
      
@@ -194,6 +195,66 @@ public class FretBoard : MonoBehaviour
                 currNoteIdx = Array.IndexOf(Helper.noteNames, Helper.openStringNoteNames[stringNum]);
             }
             
+        }
+    }
+
+    private Dictionary<GameObject, Vector3> fretPositions;
+    public void AdjustFretPositions()
+    {
+        fretPositions = new Dictionary<GameObject, Vector3>();
+        //float distAmt = 0;
+        //0-8, when 9 -> move to next string
+        //update position for frets on all strings below the 9th fret
+        Transform[] startPos = {
+            frets[0].gameObject.transform,
+            frets[22].gameObject.transform,
+            frets[44].gameObject.transform,
+            frets[66].gameObject.transform,
+            frets[88].gameObject.transform,
+            frets[110].gameObject.transform
+        };
+        Transform[] endPos = {
+            frets[21].gameObject.transform,
+            frets[43].gameObject.transform,
+            frets[65].gameObject.transform,
+            frets[87].gameObject.transform,
+            frets[109].gameObject.transform,
+            frets[131].gameObject.transform
+        };
+        stringDirections = ComputeStringDirections(startPos, endPos);
+
+        int currStringIdx = 1;
+        int j = 0;
+        for (int i = 0; i < fretCount; i++)
+        {
+            
+
+            if (j > 9)
+            {
+                j = 0;
+                currStringIdx++;
+                i = i + 12;
+            }
+
+            var gameObject = frets[i];
+            Vector3 move = AmtDist * stringDirections[currStringIdx];
+            fretPositions.Add(gameObject, gameObject.transform.position);
+            gameObject.transform.position -= move;
+
+            j++;
+            
+            
+            //prevFretPos = target;
+
+        }
+    }
+
+
+    public void ResetFretPositions()
+    {
+        foreach(var fretPos in fretPositions)
+        {
+            fretPos.Key.transform.position = fretPos.Value;
         }
     }
 }
