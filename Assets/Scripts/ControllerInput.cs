@@ -55,7 +55,8 @@ public class ControllerInput : MonoBehaviour
         Debug.Log("PosOVRInput: " + ovrPos + ", PosTransform: " + pos);
         Vector3 tipPos = pos + rightController.TransformDirection(tipOffset);
         Debug.Log("Controller tip at: " + tipOffset);
-        Instantiate(testPoint, tipPos, rightController.rotation);
+        var testPointInstance = Instantiate(testPoint, tipPos, rightController.rotation);
+        Destroy(testPointInstance, 10f);
         return tipPos;
     }
 

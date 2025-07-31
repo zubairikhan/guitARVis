@@ -10,6 +10,7 @@ public class L3MenuScalesList : MonoBehaviour
     [SerializeField] Transform contentParent;
     private PlayMode[] playModes;
     private List<string> menuItems;
+    [SerializeField] TMP_Text scaleNameDisplayTextBox;
     // Start is called before the first frame update
     void Start()
     {
@@ -61,8 +62,8 @@ public class L3MenuScalesList : MonoBehaviour
         foreach (var playMode in playModes)
         {
             playMode.ChangeNotesToPractice(itemName);
-
         }
+        scaleNameDisplayTextBox.text = "Now Playing: " + itemName;
     }
 
     public void Enable()
