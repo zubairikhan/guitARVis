@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b6792262ad28c14e8aedb2ca60de84f, type: 3}
   m_Name: Tutorial 1
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 0bc17c90a5fb6c945a7756214f2c4d49, type: 3}
+  image: {fileID: 21300000, guid: a107e618d98799544a44d211471e3559, type: 3}
   text: Lay down guitar flat in front of you

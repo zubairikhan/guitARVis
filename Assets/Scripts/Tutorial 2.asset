@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b6792262ad28c14e8aedb2ca60de84f, type: 3}
   m_Name: Tutorial 2
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 0bc17c90a5fb6c945a7756214f2c4d49, type: 3}
+  image: {fileID: 21300000, guid: 7642f562a5808b44782e7d8780caca51, type: 3}
   text: Point A selection head
