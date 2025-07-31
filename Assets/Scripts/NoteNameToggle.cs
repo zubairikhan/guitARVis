@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +18,6 @@ public class NoteNameToggle : MonoBehaviour
 
     void OnToggleChanged(bool isOn)
     {
-        Debug.Log("Toggle val: " + isOn);
         applicationManager.SetHintsEnabled(isOn);
         if (fretBoards != null)
         {

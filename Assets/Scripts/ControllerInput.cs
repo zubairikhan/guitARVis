@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class ControllerInput : MonoBehaviour
 {
@@ -69,8 +66,6 @@ public class ControllerInput : MonoBehaviour
 
         Quaternion rotation1 = Quaternion.LookRotation(endPoint - startPoint);
         
-        //Quaternion rot2 = Quaternion.Euler(90f, 0 , 0);
-
         GameObject plane = Instantiate(boardPlane, location, rotation1, leftControllerAnchor);
         plane.transform.localScale = scale;
         boards.Add(plane);

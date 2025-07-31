@@ -1,6 +1,4 @@
 using Melanchall.DryWetMidi.Core;
-using Melanchall.DryWetMidi.Interaction;
-using Melanchall.DryWetMidi.Multimedia;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +24,6 @@ public class PlayMode : MonoBehaviour, IProcess
         selectedScale = "E Major";
         startTime = DateTime.Now;
         notes = new LinkedList<Note>();
-        //fretBoard = GetComponent<FretBoard>();
         statisticsPanel = FindObjectOfType<StatisticsPanel>();
         PopulateFretsArray(fretBoard);
         ChangeNotesToPractice(selectedScale);

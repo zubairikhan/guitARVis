@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,7 +13,6 @@ public class L3MenuScalesList : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //PopulateMenu();
         playModes = FindObjectsOfType<PlayMode>();
     }
 
@@ -37,7 +35,6 @@ public class L3MenuScalesList : MonoBehaviour
             GameObject newBtn = Instantiate(buttonPrefab, contentParent);
             newBtn.GetComponentInChildren<TMP_Text>().text = item;
             newBtn.GetComponent<Button>().onClick.AddListener(() => OnMenuItemClick(item));
-
         }
     }
 

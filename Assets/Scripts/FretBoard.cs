@@ -41,8 +41,6 @@ public class FretBoard : MonoBehaviour
     {
         stringDirections = ComputeStringDirections(startingFretPos, endingFretPos);
 
-
-
         int currStringIdx = -1;
         float fretDist = 0;
         Vector3 target = Vector3.zero;
@@ -94,14 +92,9 @@ public class FretBoard : MonoBehaviour
             {
                 currStringIdx++;
             }
-            //scalingFact = Helper.fretDistsFromNut[j] / stringDirections[currStringIdx].x;
-            //Vector3 move = (float)scalingFact * stringDirections[currStringIdx];
-
             Vector3 move = (float)Helper.fretDistsFromNut[j] * stringDirections[currStringIdx];
             gameObject.transform.position += move;
             
-            //prevFretPos = target;
-
             Vector3 scale = gameObject.transform.localScale;
             scale.x = (float)(scale.x * Math.Pow(0.965, j));
             gameObject.transform.localScale = scale;
@@ -200,14 +193,19 @@ public class FretBoard : MonoBehaviour
         }
     }
 
-    private Dictionary<GameObject, Vector3> fretPositions;
-    public void AdjustFretPositions()
+    /*
+     * Used to extend fret positions for lower frets
+     * when augmented fretboard locked on the guitar
+     * 
+     * direction = -1 for extending (placing fretboard on guitar)
+     * direction = 1 for resetting to original position (taking fretboard off guitar)
+     * 
+     * Adjustmentis done for the first 8 frets for each string.
+     */
+    public void AdjustFretPositions(int direction)
     {
         float adjDist = AdjustDistLong;
-        fretPositions = new Dictionary<GameObject, Vector3>();
-        //float distAmt = 0;
-        //0-8, when 9 -> move to next string
-        //update position for frets on all strings below the 9th fret
+        
         Transform[] startPos = {
             frets[0].gameObject.transform,
             frets[22].gameObject.transform,
@@ -230,11 +228,8 @@ public class FretBoard : MonoBehaviour
         int j = 0;
         for (int i = 0; i < fretCount; i++)
         {
-            
-            
             if (j > 8)
             {
-                //dist = x
                 j = 0;
                 currStringIdx++;
                 i = i + 13;
@@ -246,80 +241,14 @@ public class FretBoard : MonoBehaviour
                 break;
             }
 
-
             var gameObject = frets[i];
             Vector3 move = adjDist * stringDirections[currStringIdx];
-            fretPositions.Add(gameObject, gameObject.transform.position);
-            gameObject.transform.position -= move;
+            gameObject.transform.position += direction * move;
 
             adjDist *= AdjustFactor;
 
             j++;
-            
-            
-            //prevFretPos = target;
-
         }
-    }
-
-    public void ResetFretPositions()
-    {
-        float adjDist = AdjustDistLong;
-        fretPositions = new Dictionary<GameObject, Vector3>();
-        //float distAmt = 0;
-        //0-8, when 9 -> move to next string
-        //update position for frets on all strings below the 9th fret
-        Transform[] startPos = {
-            frets[0].gameObject.transform,
-            frets[22].gameObject.transform,
-            frets[44].gameObject.transform,
-            frets[66].gameObject.transform,
-            frets[88].gameObject.transform,
-            frets[110].gameObject.transform
-        };
-        Transform[] endPos = {
-            frets[21].gameObject.transform,
-            frets[43].gameObject.transform,
-            frets[65].gameObject.transform,
-            frets[87].gameObject.transform,
-            frets[109].gameObject.transform,
-            frets[131].gameObject.transform
-        };
-        stringDirections = ComputeStringDirections(startPos, endPos);
-
-        int currStringIdx = 0;
-        int j = 0;
-        for (int i = 0; i < fretCount; i++)
-        {
-
-
-            if (j > 8)
-            {
-                //dist = x
-                j = 0;
-                currStringIdx++;
-                i = i + 13;
-                adjDist = AdjustDistLong;
-            }
-
-            if (currStringIdx > 5)
-            {
-                break;
-            }
-
-
-            var gameObject = frets[i];
-            Vector3 move = adjDist * stringDirections[currStringIdx];
-            fretPositions.Add(gameObject, gameObject.transform.position);
-            gameObject.transform.position += move;
-
-            adjDist *= AdjustFactor;
-
-            j++;
-
-
-            //prevFretPos = target;
-
-        }
+        SetInlayMarkersPosition();
     }
 }

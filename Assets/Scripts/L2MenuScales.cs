@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,18 +7,6 @@ public class L2MenuScales : MonoBehaviour
     [SerializeField] public GameObject L3Menu;
     private bool isScalesMenuEnabled;
     private bool isNotesMenuEnabled;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void EnableChildPanelForSingleNotes()
     {
@@ -34,7 +20,6 @@ public class L2MenuScales : MonoBehaviour
             scalesList.SetMenuItems(Helper.naturalNotes.ToList());
         }
         
-        //scalesList.gameObject.SetActive(true);
     }
 
     public void EnableChildPanelForScales()
@@ -48,6 +33,5 @@ public class L2MenuScales : MonoBehaviour
             isNotesMenuEnabled = false;
             scalesList.SetMenuItems(Helper.scales.ToList());
         }
-        //scalesList.gameObject.SetActive(true);
     }
 }

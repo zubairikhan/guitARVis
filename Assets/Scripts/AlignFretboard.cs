@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AlignFretboard : MonoBehaviour
@@ -10,12 +8,6 @@ public class AlignFretboard : MonoBehaviour
     void Start()
     {
         manager = FindObjectOfType<ApplicationManager>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void MoveFretBoardStationUp()

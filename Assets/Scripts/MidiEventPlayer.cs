@@ -1,5 +1,3 @@
-using Melanchall.DryWetMidi.Core;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -70,22 +68,8 @@ public class MidiEventPlayer: MonoBehaviour
                 yield return new WaitForSeconds(eventTime - currentElapsed);
             }
 
-            // Process the event (in this case just print to console)
-            //PrintEvent(timedEvent.Event);
+            // Process the event
             _midiManager.ProcessNotesForPlayback(timedEvent.Event);
         }
     }
-
-    //private void PrintEvent(MidiEvent midiEvent)
-    //{
-    //    string eventInfo = midiEvent switch
-    //    {
-    //        NoteOnEvent noteOn => $"Note ON: {noteOn.NoteName} (Velocity: {noteOn.Velocity})",
-    //        NoteOffEvent noteOff => $"Note OFF: {noteOff.NoteName}",
-    //        ControlChangeEvent cc => $"Control Change: {cc.ControlNumber} = {cc.ControlValue}",
-    //        _ => $"Other event: {midiEvent}"
-    //    };
-
-    //    Debug.Log($"[{DateTime.Now:HH:mm:ss.fff}] {eventInfo}");
-    //}
 }

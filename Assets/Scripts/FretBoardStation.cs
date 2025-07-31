@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FretBoardStation : MonoBehaviour
@@ -81,18 +79,16 @@ public class FretBoardStation : MonoBehaviour
         if (other.gameObject.tag == "Fretboard")
         {
             meshRenderer.enabled = false;
-            other.gameObject.GetComponent<FretBoard>().AdjustFretPositions();
+            other.gameObject.GetComponent<FretBoard>().AdjustFretPositions(-1);
         }
-            
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Fretboard")
         {
             meshRenderer.enabled = true;
-            other.gameObject.GetComponent<FretBoard>().ResetFretPositions();
+            other.gameObject.GetComponent<FretBoard>().AdjustFretPositions(1);
         }
-            
     }
 }
 

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +15,6 @@ public class ToggleMenu : MonoBehaviour
 
     void OnToggleChanged(bool isOn)
     {
-        Debug.Log("Toggle: " + isOn);
         Menu.SetActive(isOn);
     }
 

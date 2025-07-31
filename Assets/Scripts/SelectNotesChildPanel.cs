@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +12,6 @@ public class SelectNotesChildPanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //PopulateMenu();
         playMode = FindObjectOfType<PlayMode>();
     }
 
@@ -38,7 +35,6 @@ public class SelectNotesChildPanel : MonoBehaviour
             GameObject newBtn = Instantiate(buttonPrefab, contentParent);
             newBtn.GetComponentInChildren<TMP_Text>().text = item;
             newBtn.GetComponent<Button>().onClick.AddListener(() => OnMenuItemClick(item));
-
         }
     }
 

@@ -8,7 +8,6 @@ public class MidiEventRecorder
     private IInputDevice _inputDevice;
     private List<TimedMidiEvent> _recordedEvents = new List<TimedMidiEvent>();
     private DateTime _recordingStartTime;
-    //private bool _isRecording = false;
     private MidiManager _midiManager;
     private MeshRenderer _recordingLightMeshRenderer;
 
@@ -33,16 +32,12 @@ public class MidiEventRecorder
     {
         _recordedEvents.Clear();
         _recordingStartTime = DateTime.Now;
-        //_isRecording = true;
-        //_inputDevice.StartEventsListening();
         Debug.Log("MIDI recording started");
         ChangeRecordingLight(Color.red);
     }
 
     public void StopRecording()
     {
-        //_isRecording = false;
-        //_inputDevice.StopEventsListening();
         Debug.Log($"MIDI recording stopped. Captured {_recordedEvents.Count} events");
         ChangeRecordingLight(Color.white);
     }

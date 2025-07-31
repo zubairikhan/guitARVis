@@ -1,6 +1,3 @@
-using OVRSimpleJSON;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,12 +19,6 @@ public class L1Menu : MonoBehaviour
         applicationManager = FindObjectOfType<ApplicationManager>();
         fretBoards = FindObjectsOfType<FretBoard>();
         controllerInput = FindObjectOfType<ControllerInput>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void ToggleL2MenuModes()

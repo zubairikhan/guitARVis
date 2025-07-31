@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class Helper
 {
@@ -63,6 +62,11 @@ public class Helper
         { "D Whole Tone", new string[]{ "D", "E", "F#/Gb", "G#/Ab", "A#/Bb", "C" } },
     };
 
+    /*
+     * Placement of the augmented frets
+     * Hardcoded for the guitar (Squier bullet) used to build this project
+     * In the future, this should be generic to work with all guitar neck lengths
+     */
     public static double[] fretDistsFromNut =
     {
         0,

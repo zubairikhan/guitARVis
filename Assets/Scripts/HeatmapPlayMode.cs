@@ -1,8 +1,5 @@
 using Melanchall.DryWetMidi.Core;
-using Melanchall.DryWetMidi.Multimedia;
 using System;
-using System.Linq;
-using UnityEngine;
 
 public class HeatmapPlayMode : PlayMode
 {

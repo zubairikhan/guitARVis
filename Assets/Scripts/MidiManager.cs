@@ -1,9 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
-using Melanchall.DryWetMidi.Multimedia;
 using System;
 using Melanchall.DryWetMidi.Core;
-using System.Linq;
 
 public class MidiManager: MonoBehaviour
 {
@@ -14,41 +11,6 @@ public class MidiManager: MonoBehaviour
     public bool IsRecording { get; private set; }
     public bool IsPlaying { get; private set; }
     
-    //private IInputDevice _inputDevice;
-
-    // Start is called before the first frame update
-    //void Start()
-    //{
-    //    _inputDevice = InputDevice.GetByName("TriplePlay Connect");
-    //    _inputDevice.EventReceived += OnEventReceived;
-    //    _inputDevice.StartEventsListening();
-
-    //    //(_inputDevice as IDisposable)?.Dispose();
-    //}
-
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    if(Input.GetKeyDown(KeyCode.Space))
-    //    {
-    //        (_inputDevice as IDisposable)?.Dispose();
-    //    }
-    //}
-
-    //private void OnEventReceived(object sender, MidiEventReceivedEventArgs e)
-    //{
-    //    //if recording, save events to a list
-    //    //if not recording, dont save to list
-
-    //    //if playing, skip this next block
-    //    //if not playing, run this block
-    //    foreach(var playMode in fretBoardPlayModes)
-    //    {
-    //        playMode.Process(sender, e);
-    //    }
-
-    //}
-
     [SerializeField] private string _midiDeviceName = "TriplePlay Connect";
 
     private MidiEventRecorder _recorder;
@@ -123,28 +85,28 @@ public class MidiManager: MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R)) // Start recording
-        {
-            StartRecording();
-        }
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.R)) // Start recording
+    //    {
+    //        StartRecording();
+    //    }
 
-        if (Input.GetKeyDown(KeyCode.S)) // Stop recording
-        {
-            StopRecording();
-        }
+    //    if (Input.GetKeyDown(KeyCode.S)) // Stop recording
+    //    {
+    //        StopRecording();
+    //    }
 
-        if (Input.GetKeyDown(KeyCode.P)) // Play back recorded events
-        {
-            PlayBackRecording();
-        }
+    //    if (Input.GetKeyDown(KeyCode.P)) // Play back recorded events
+    //    {
+    //        PlayBackRecording();
+    //    }
 
-        if (Input.GetKeyDown(KeyCode.O)) // Stop Play back recorded events
-        {
-            StopPlayBackRecording();
-        }
-    }
+    //    if (Input.GetKeyDown(KeyCode.O)) // Stop Play back recorded events
+    //    {
+    //        StopPlayBackRecording();
+    //    }
+    //}
 
     void OnDestroy()
     {
