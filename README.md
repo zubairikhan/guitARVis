@@ -18,9 +18,9 @@ GuitARVis provides real-time visual feedback for guitar players by overlaying an
 
 ## Demo
 
-https://drive.google.com/file/d/1cJr19QpYipL7fkKGGbfL-AqymegZDBYY/view?usp=drive_link
+[Play Demo Video: Improvising on Bmajor scale](https://drive.google.com/file/d/1cJr19QpYipL7fkKGGbfL-AqymegZDBYY/view?usp=drive_link)
 
-https://drive.google.com/file/d/1NKX_k30iU3_VaRwHRlajDMs0Dzg2_SjO/view?usp=sharing
+[Setup Demo Video](https://drive.google.com/file/d/1NKX_k30iU3_VaRwHRlajDMs0Dzg2_SjO/view?usp=sharing)
 
 
 ![Fretboard](./fretboard.png)
